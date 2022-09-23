@@ -52,7 +52,7 @@ public class simpleOperation {
 		double[][]result = null;
 		return result;
 	}
-	public double [][] perkalianMatrixConst(double[][]matrix, float con){
+	public double [][] perkalianMatrixConst(double[][]matrix, double d){
 		double[][] result = null;
 		return result;
 	}
@@ -110,8 +110,17 @@ public class simpleOperation {
 	
 	//	Matrix invers dengan adjoin
 	public double[][]inversWithAdjoin(double[][]matrix){
-		double[][]result = null;
-		return result;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double[][]kofaktor = new double[rows][cols];
+		double [][]adjoin = new double[cols][rows];
+		double[][]invers = new double[cols][rows];
+		double determinan = determinanOBE(matrix);
+		kofaktor = matrixKofaktor(matrix);
+		adjoin = transpose(kofaktor);
+		invers = perkalianMatrixConst(adjoin, (1/determinan));
+		return invers;
+		
 	}
 	
 
