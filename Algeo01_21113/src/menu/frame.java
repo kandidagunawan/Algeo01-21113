@@ -1,31 +1,23 @@
 package menu;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JTextField;
-
-
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import javax.swing.*;
 
 public class frame extends JFrame implements ActionListener{
-	JButton button;
-	JTextField textField;
+	JButton button, selectFile, sendMatrix, sendMatrixSize;
+	JLabel labelInput;
+	JTextField inputRows, inputCols;
+	JPanel inputMatrix;
 	JMenuBar menuBar;
 	JMenu home, operation;
 	JMenuItem spl, determinan, invers, interpolasiPolinom, interpolasiBicubic, regresi;
-	JButton selectFile;
+	
+//	JTextArea  textArea;
+	double matrix[][];
+	int rows, cols;
+	
 	
 	public frame(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,20 +61,43 @@ public class frame extends JFrame implements ActionListener{
 		operation.add(regresi);
 		
 		
+		// select file from dir
 		selectFile = new JButton("Select File");
 		selectFile.addActionListener(this);
 		this.add(selectFile);
 		this.setJMenuBar(menuBar);
 		
-		this.setVisible(true);
-	
 		
-//		textField = new JTextField();
-//		button = new JButton("Submit");
-//		button.addActionListener(this);
-//		textField.setPreferredSize(new Dimension(250, 40));
-//		this.add(textField);
-//		this.add(button);
+		
+		// send matrix 
+		
+		inputRows = new JTextField();
+		inputRows.setPreferredSize(new Dimension(50, 30));
+		inputRows.addActionListener(this);
+		this.add(inputRows);
+		
+		inputCols = new JTextField();
+		inputCols.setPreferredSize(new Dimension(50, 30));
+		inputCols.addActionListener(null);
+		this.add(inputCols);
+		
+		sendMatrixSize = new JButton("Submit");
+		sendMatrixSize.addActionListener(this);
+		this.add(sendMatrixSize);
+		
+		
+		//textArea = new JTextArea(20, 30);
+		//JScrollPane scroll = new JScrollPane(textArea);
+		//textArea.setBounds(30,30, 20,30); 
+		//this.add(textArea);
+
+//		labelInput = new JLabel();
+
+		//this.add(textArea);
+//		this.add(labelInput);
+		
+		this.setVisible(true);
+
 
 		
 	}
@@ -92,7 +107,7 @@ public class frame extends JFrame implements ActionListener{
 	}
 	public static void splMenu() {
 		frame frame = new frame();
-		System.out.println("hai");
+		
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -140,6 +155,33 @@ public class frame extends JFrame implements ActionListener{
 			
 			
 		}
+		else if(e.getSource() == sendMatrixSize) {
+			rows = Integer.parseInt(inputRows.getText());
+			cols = Integer.parseInt(inputCols.getText());
+			inputMatrix = new JPanel();
+			JLabel input = new JLabel("Masukkan matrix: ");
+			inputMatrix.setLayout(new GridLayout(rows, cols));
+			this.add(input);
+			this.add(inputMatrix);
+			for(int i = 0; i < (rows*cols); i++) {
+				inputMatrix.add(new JTextField(3));
+			}
+			sendMatrix = new JButton("Send Matrix");
+			sendMatrix.addActionListener(this);
+			this.add(sendMatrix);
 
+		}
+		else if(e.getSource() == sendMatrix) {
+//			
+			sendMatrix.setEnabled(false);
+			
+		}
+		
+
+	}
+
+	private int parseInt(String text) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
