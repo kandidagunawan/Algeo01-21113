@@ -11,6 +11,16 @@ public class simpleOperation {
 		}
 	}
 	
+	public double [][]tukarBaris(double[][] matrix, int baris1, int baris2){
+		double temp;
+		for(int j = 0; j < matrix[0].length; j++) {
+			temp = matrix[baris1][j];
+			matrix[baris1][j] = matrix[baris2][j];
+			matrix[baris2][j] = temp;
+		}
+		return matrix;
+	}
+	
 	
 	// CEK MATRIX
 	public boolean isIdentity(double [][] matrix) {
@@ -78,6 +88,8 @@ public class simpleOperation {
 //	ELIMINASI GAUSS & GAUSS JORDAN
 	public double[][]gauss(double[][]matrix){
 		double[][] result = null;
+
+
 		return result;
 	}
 	public double[][]gaussJordan(double[][]matrix){
@@ -105,6 +117,7 @@ public class simpleOperation {
 	//	Matrix invers dengan gauss jordan
 	public double[][]inversGaussJordan(double[][]matrix){
 		double [][]result = null;
+		
 		return result;
 	}
 	
