@@ -127,53 +127,54 @@ public class simpleOperation {
 		
 		int rows = matrix.length;       
 		int cols = matrix[0].length;
-		double[][] result = null;
-		double[] counter = null;
+		int i;
 		
-		for(int i = 0; i < rows; i++) {
-			int j = 0;
-			while(j < cols && matrix[i][j] == 0) { //hitung berapa banyak 0
-				counter[i]++;
-				j++;
-			}
-		}
-		
-		for (int i = 0; i < rows; i++) {  // 0 1 0  1  2 3  4  5 6
-			if (counter[i] <= i) {
-				continue;
-			}
-			else {
-				for(int j = i+1; j < rows; j++) {
-					if (counter[i] >= counter[j]) {
-						tukarBaris(matrix, i, j); // counter[0] == 2 
-					} else {
-						continue;
+		for (i = 0; i < matrix.length; i++) {
+			int temp1 = i;
+			int temp2 = i;
+			boolean foundnotZero = false; 
+			
+			for (int brs = i; brs < rows; rows++) {
+				for (int kol = i; kol < cols; cols++) {
+					if(matrix[brs][kol] != 0) {
+						foundnotZero = true;    
+						temp1 = brs;
+						temp2 = kol;
+						break;
 					}
 				}
+				if (foundnotZero) {
+					break;
+				}
 			}
-		}
-		
-		
-		for (int i = 0; i < rows; i++) {
-			int j = 0;
-			int tempi = 0;
+			if(!foundnotZero) {
+				break;
+			}
 			
-			while (j < i && tempi < i) {
-				double temp1 = matrix[i][j];  //matrix[0][0]
-				double temp2 = matrix[tempi][j];
-				for(int j1 = 0; j1 < cols; j1++) {
-					matrix[i][j] -= (temp1/temp2 * matrix[tempi][j]);
+			double temp;
+			if (temp1 != i) { //switch switch heyyyyyy
+				for (int j = 0; j < cols; j++) {
+					tukarBaris(matrix, i, j);
 				}
-				j++;
-				tempi++;
-			}
-			double pembagi = matrix[i][i];
-			if(pembagi != 0) {
-				for(int k = 0; k < cols; k++) {
-					matrix[i][k] /= pembagi;
-				}
-			}
+				temp1 = i;
 		}
+			double pembagi = matrix[temp1][temp2];
+			for(int j = temp2; j< cols; j++) {
+				matrix[i][j] /= pembagi;
+			}
+			
+			for (int brs = i+1; brs < rows; brs++) {
+				double c = matrix[brs][temp2];
+				for(int kol = temp2; kol < cols; kol++) {
+					matrix[brs][kol] -= matrix[temp1][kol] * c;
+				}
+			}
+		
+		
+		
+			
+		}
+		
 		
 
 		return matrix;
@@ -183,20 +184,27 @@ public class simpleOperation {
 		int row = matrix.length;
 		int col = matrix[0].length;
 		
-		for(int i = 0; i < row; i++) {
-			for(int j = 0; j < col; j++) {
-				if(matrix[i][j] == 1) {
-					for (int nBrs = 0; nBrs < row; nBrs++) {
-						if(nBrs != i) {
-							double temp1 = matrix[nBrs][j];
-							for(int nKol = j; nKol < col; nKol++) {
-								matrix[nBrs][nKol] -= (matrix[i][nKol] * temp1);
-							}
+		int i= 0;
+		int j = 0;
+		while (i < row && j < col) {
+			if (matrix[i][j] == 1) {
+				for (int brs = 0; brs < row; brs++) {
+					if (brs != i) {
+						double c = matrix[brs][j];
+						for (int kol = j; kol < col; kol++) {
+							matrix[brs][kol] -= matrix[i][kol] * c;
 						}
 					}
 				}
-			}
+				i++;
+			} else {
+				j++;
 		}
+		
+			
+			
+		}
+		
 		return matrix;
 	}
 	
@@ -212,7 +220,9 @@ public class simpleOperation {
 		
 		for(int i = 0; i < row; i++) {
 			for(int j = 0; j < col; j++)
-				det *= matrix[i][j];
+				if (i == j) {
+					det *= matrix[i][j];
+				}
 		}
 		
 		return det;
