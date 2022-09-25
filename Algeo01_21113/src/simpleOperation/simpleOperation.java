@@ -116,9 +116,91 @@ public class simpleOperation {
 	
 	//	Matrix invers dengan gauss jordan
 	public double[][]inversGaussJordan(double[][]matrix){
-		double [][]result = null;
 		
-		return result;
+		//PREKONDISI : matrix yang dimasukkan sudah dicek kalo emang ada matrix balikannya
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double [][]identitas = new double[rows][cols];
+		int []counter = new int[rows];
+//		ISI IDENTITAS
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				if(i == j) {
+					identitas[i][j] = 1;
+				}
+				else {
+					identitas[i][j] = 0;
+				}
+			}
+		}
+		//		HITUNG BANYAK 0 DI TIAP BARIS
+		for(int i = 0; i < rows; i++) {
+			int j = 0;
+			while(j < cols && matrix[i][j] == 0) {
+				counter[i]++;
+				j++;
+			}
+		}
+		
+		//		TUKAR BARIS BERDASARKAN JUMLAH 0 DI TIAP BARIS
+		for(int i = 0; i < rows; i++) {
+			if(counter[i] <= i) {
+				continue;
+			}
+			else {
+				for(int j = i+1; j < rows; j++) {
+					if(counter[i] >= counter[j]) {
+						tukarBaris(matrix, i, j);
+						tukarBaris(identitas, i, j);
+					}
+					else {
+						continue;
+					}
+				}
+			}
+		}
+		//		KURANGIN2
+		//(GAUSS)
+		for(int i = 0; i < rows; i++) {
+			int j = 0;
+			int tempi = 0;
+			while(j < i && tempi < i) {
+				double temp1 = matrix[i][j];
+				double  temp2 = matrix[tempi][j];
+				for(int j1= 0; j1 < cols; j1++) {
+					matrix[i][j1] -= (temp1/temp2 * matrix[tempi][j1]);
+					identitas[i][j1] -= (temp1/temp2 * identitas[tempi][j1]);
+				}
+				j++;
+				tempi++;
+			}
+			double pembagi = matrix[i][i];
+			if(pembagi != 0) {
+				for(int k = 0; k < cols; k++) {
+					matrix[i][k] /= pembagi;
+					identitas[i][k] /= pembagi;
+				}				
+			}
+
+		}
+		
+		for(int i = 0; i < rows; i++) {
+			int j = i+1;
+			int tempi = i+1;
+			while(tempi < rows && j < cols) {
+				double temp1 = matrix[i][j];
+				double  temp2 = matrix[tempi][j];
+				for(int j1= 0; j1 < cols; j1++) {
+					matrix[i][j1] -= (temp1/temp2 * matrix[tempi][j1]);
+					identitas[i][j1] -= (temp1/temp2 * identitas[tempi][j1]);
+				}
+				j++;
+				tempi++;
+			}
+		}
+		return identitas; 	
+				
+	
 	}
 	
 	//	Matrix invers dengan adjoin
