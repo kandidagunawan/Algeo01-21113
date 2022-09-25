@@ -23,6 +23,37 @@ public class simpleOperation {
 	
 	
 	// CEK MATRIX
+	
+	
+	// CEK apakah ada baris yang isinya nol semua
+	public boolean isBarisNol(double[][]matrix) {
+			boolean nol = true;
+			for(int i = 0; i < matrix.length; i++) {
+				nol = true;
+				for(int j = 0; j < matrix[0].length; j++) {
+					if(matrix[i][j] != 0) {
+						nol = false;
+						break;
+					}
+				}
+			}
+			return nol;
+	}
+	
+	// CEK apakah ada kolom yang isinya nol semua
+	public boolean isKolomNol(double[][]matrix) {
+			boolean nol = true;
+			for(int j = 0; j < matrix[0].length; j++) {
+				nol = true;
+				for(int i = 0; i < matrix.length; i++) {
+					if(matrix[i][j] != 0) {
+						nol = false;
+						break;
+					}
+				}
+			}
+			return nol;
+	}
 	public boolean isIdentity(double [][] matrix) {
 		if(isSquare(matrix)) {
 			int n = matrix.length;
