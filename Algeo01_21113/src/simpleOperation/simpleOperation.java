@@ -170,8 +170,6 @@ public class simpleOperation {
 				}
 			}
 		
-		
-		
 			
 		}
 		
@@ -207,7 +205,6 @@ public class simpleOperation {
 		
 		return matrix;
 	}
-	
 	
 //	DETERMINAN MATRIX
 	
