@@ -5,9 +5,9 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 
-public class frame extends JFrame implements ActionListener{
+public class inverse extends JFrame implements ActionListener{
 	JButton button, selectFile, sendMatrix, sendMatrixSize;
-	JLabel labelInput;
+	JLabel labelInput, welcome;
 	JTextField inputRows, inputCols;
 	JPanel inputMatrix;
 	JMenuBar menuBar;
@@ -18,8 +18,7 @@ public class frame extends JFrame implements ActionListener{
 	double matrix[][];
 	int rows, cols;
 	
-	
-	public frame(){
+	public inverse(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500, 500);
 		this.setLayout(new FlowLayout());
@@ -36,10 +35,6 @@ public class frame extends JFrame implements ActionListener{
 		interpolasiBicubic = new JMenuItem("Interpolasi Bicubic");
 		regresi = new JMenuItem("Regresi Linier Berganda");
 		
-		
-//		load = new JMenuItem("load");
-//		home.add(load);
-//		load.addActionListener(this);
 		
 		home.addActionListener(this);
 		operation.addActionListener(this);
@@ -68,9 +63,7 @@ public class frame extends JFrame implements ActionListener{
 		this.setJMenuBar(menuBar);
 		
 		
-		
 		// send matrix 
-		
 		inputRows = new JTextField();
 		inputRows.setPreferredSize(new Dimension(50, 30));
 		inputRows.addActionListener(this);
@@ -86,50 +79,34 @@ public class frame extends JFrame implements ActionListener{
 		this.add(sendMatrixSize);
 		
 		
-		//textArea = new JTextArea(20, 30);
-		//JScrollPane scroll = new JScrollPane(textArea);
-		//textArea.setBounds(30,30, 20,30); 
-		//this.add(textArea);
-
-//		labelInput = new JLabel();
-
-		//this.add(textArea);
-//		this.add(labelInput);
-		
 		this.setVisible(true);
 
-
-		
 	}
 
-	public static void input() {
 
-	}
 	public static void splMenu() {
-		frame frame = new frame();
+		inverse frame = new inverse();
 		
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == spl) {
-			JButton coba = new JButton("dida");
-			this.add(coba);
-			
+			inverse frame = new inverse();
 		}
 		else if(e.getSource() == determinan) {
-			
+			determinan determinan = new determinan();
 		}
 		else if(e.getSource() == invers) {
-			
+			inverse frame = new inverse();
 		}
 		else if(e.getSource() == interpolasiPolinom) {
-			
+			inverse frame = new inverse();
 		}
 		else if(e.getSource() == interpolasiBicubic) {
-			
+			inverse frame = new inverse();
 		}
 		else if(e.getSource() == regresi) {
-			
+			inverse frame = new inverse();
 		}
 		else if(e.getSource() == selectFile) {
 			JFileChooser fileChooser = new JFileChooser();
@@ -158,6 +135,7 @@ public class frame extends JFrame implements ActionListener{
 		else if(e.getSource() == sendMatrixSize) {
 			rows = Integer.parseInt(inputRows.getText());
 			cols = Integer.parseInt(inputCols.getText());
+			matrix = new double[rows][cols];
 			inputMatrix = new JPanel();
 			JLabel input = new JLabel("Masukkan matrix: ");
 			inputMatrix.setLayout(new GridLayout(rows, cols));
@@ -172,16 +150,17 @@ public class frame extends JFrame implements ActionListener{
 
 		}
 		else if(e.getSource() == sendMatrix) {
-//			
+				for(int i = 0; i < rows; i++) {
+					for(int j = 0; j < cols; j++) {
+						matrix[i][j] = (Double.parseDouble(((JTextField)inputMatrix.getComponent(i*cols + j)).getText()));	
+					}
+				}
+
 			sendMatrix.setEnabled(false);
 			
 		}
 		
-
 	}
 
-	private int parseInt(String text) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 }

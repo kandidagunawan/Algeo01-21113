@@ -27,9 +27,9 @@ public class Main {
 //		result = simple.transpose(matrix);
 //		simple.printMatrix(result);
 //		System.out.println(simple.isIdentity(matrix));
-		frame frame = new frame();		
-
-
+		
+	
+		home home = new home();
 	
 		
 	}
