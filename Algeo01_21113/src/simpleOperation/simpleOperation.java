@@ -86,7 +86,13 @@ public class simpleOperation {
 	
 	// OPERASI SEDERHANA PADA MATRIX
 	public double[][]plusMinMatrix(double[][]matrix1, double[][]matrix2){
-		double[][]result = null;
+		
+		double result[][] = null;
+		for(int i = 0; i < matrix1.length; i++) {
+			for(int j = 0; j < matrix1.length; j++) {
+				result[i][j] = matrix1[i][j] + matrix2[i][j];
+			}
+		}
 		return result;
 	}
 	public double[][] perkalianDuaMatrix(double[][]matrix1, double[][]matrix2){
@@ -118,14 +124,88 @@ public class simpleOperation {
 	
 //	ELIMINASI GAUSS & GAUSS JORDAN
 	public double[][]gauss(double[][]matrix){
-		double[][] result = null;
+		
+		int rows = matrix.length;       
+		int cols = matrix[0].length;
+		int i;
+		
+		for (i = 0; i < matrix.length; i++) {
+			int temp1 = i;
+			int temp2 = i;
+			boolean foundnotZero = false; 
+			
+			for (int brs = i; brs < rows; rows++) {
+				for (int kol = i; kol < cols; cols++) {
+					if(matrix[brs][kol] != 0) {
+						foundnotZero = true;    
+						temp1 = brs;
+						temp2 = kol;
+						break;
+					}
+				}
+				if (foundnotZero) {
+					break;
+				}
+			}
+			if(!foundnotZero) {
+				break;
+			}
+			
+			double temp;
+			if (temp1 != i) { //switch switch heyyyyyy
+				for (int j = 0; j < cols; j++) {
+					tukarBaris(matrix, i, j);
+				}
+				temp1 = i;
+		}
+			double pembagi = matrix[temp1][temp2];
+			for(int j = temp2; j< cols; j++) {
+				matrix[i][j] /= pembagi;
+			}
+			
+			for (int brs = i+1; brs < rows; brs++) {
+				double c = matrix[brs][temp2];
+				for(int kol = temp2; kol < cols; kol++) {
+					matrix[brs][kol] -= matrix[temp1][kol] * c;
+				}
+			}
+		
+		
+		
+			
+		}
+		
+		
 
-
-		return result;
+		return matrix;
 	}
 	public double[][]gaussJordan(double[][]matrix){
-		double[][]result = null;
-		return result;
+		matrix = gauss(matrix);
+		int row = matrix.length;
+		int col = matrix[0].length;
+		
+		int i= 0;
+		int j = 0;
+		while (i < row && j < col) {
+			if (matrix[i][j] == 1) {
+				for (int brs = 0; brs < row; brs++) {
+					if (brs != i) {
+						double c = matrix[brs][j];
+						for (int kol = j; kol < col; kol++) {
+							matrix[brs][kol] -= matrix[i][kol] * c;
+						}
+					}
+				}
+				i++;
+			} else {
+				j++;
+		}
+		
+			
+			
+		}
+		
+		return matrix;
 	}
 	
 	
@@ -133,8 +213,19 @@ public class simpleOperation {
 	
 	// Determinan matrix dengan reduksi baris OBE
 	public double determinanOBE(double[][]matrix) {
-		double result = 0;
-		return result;
+		matrix = gauss(matrix);
+		double det = 1.0;
+		int row = matrix.length;
+		int col = matrix.length;
+		
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++)
+				if (i == j) {
+					det *= matrix[i][j];
+				}
+		}
+		
+		return det;
 	}
 	
 	//Determinan matrix dengan ekspansi kofaktor
@@ -147,91 +238,9 @@ public class simpleOperation {
 	
 	//	Matrix invers dengan gauss jordan
 	public double[][]inversGaussJordan(double[][]matrix){
+		double [][]result = null;
 		
-		//PREKONDISI : matrix yang dimasukkan sudah dicek kalo emang ada matrix balikannya
-		int rows = matrix.length;
-		int cols = matrix[0].length;
-		double [][]identitas = new double[rows][cols];
-		int []counter = new int[rows];
-//		ISI IDENTITAS
-		for(int i = 0; i < rows; i++) {
-			for(int j = 0; j < cols; j++) {
-				if(i == j) {
-					identitas[i][j] = 1;
-				}
-				else {
-					identitas[i][j] = 0;
-				}
-			}
-		}
-		//		HITUNG BANYAK 0 DI TIAP BARIS
-		for(int i = 0; i < rows; i++) {
-			int j = 0;
-			while(j < cols && matrix[i][j] == 0) {
-				counter[i]++;
-				j++;
-			}
-		}
-		
-		//		TUKAR BARIS BERDASARKAN JUMLAH 0 DI TIAP BARIS
-		for(int i = 0; i < rows; i++) {
-			if(counter[i] <= i) {
-				continue;
-			}
-			else {
-				for(int j = i+1; j < rows; j++) {
-					if(counter[i] >= counter[j]) {
-						tukarBaris(matrix, i, j);
-						tukarBaris(identitas, i, j);
-					}
-					else {
-						continue;
-					}
-				}
-			}
-		}
-		//		KURANGIN2
-		//(GAUSS)
-		for(int i = 0; i < rows; i++) {
-			int j = 0;
-			int tempi = 0;
-			while(j < i && tempi < i) {
-				double temp1 = matrix[i][j];
-				double  temp2 = matrix[tempi][j];
-				for(int j1= 0; j1 < cols; j1++) {
-					matrix[i][j1] -= (temp1/temp2 * matrix[tempi][j1]);
-					identitas[i][j1] -= (temp1/temp2 * identitas[tempi][j1]);
-				}
-				j++;
-				tempi++;
-			}
-			double pembagi = matrix[i][i];
-			if(pembagi != 0) {
-				for(int k = 0; k < cols; k++) {
-					matrix[i][k] /= pembagi;
-					identitas[i][k] /= pembagi;
-				}				
-			}
-
-		}
-		
-		for(int i = 0; i < rows; i++) {
-			int j = i+1;
-			int tempi = i+1;
-			while(tempi < rows && j < cols) {
-				double temp1 = matrix[i][j];
-				double  temp2 = matrix[tempi][j];
-				for(int j1= 0; j1 < cols; j1++) {
-					matrix[i][j1] -= (temp1/temp2 * matrix[tempi][j1]);
-					identitas[i][j1] -= (temp1/temp2 * identitas[tempi][j1]);
-				}
-				j++;
-				tempi++;
-			}
-		}
-		return identitas; 	
-				
-	
+		return result;
 	}
 	
 	//	Matrix invers dengan adjoin
