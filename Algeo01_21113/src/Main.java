@@ -12,24 +12,30 @@ public class Main {
 		int rows = scanner.nextInt();
 		System.out.println("Masukkan jumlah kolom matrix: ");
 		int cols = scanner.nextInt();
-		double [][] matrix = new double [rows][cols];
+		double [][] m = new double [rows][cols];
 		
 		System.out.println("Masukkan elemen matrix: ");
 		for(int i = 0; i < rows; i++) {
 			for(int j = 0; j < cols; j++) {
-				matrix[i][j] = scanner.nextInt();
+				m[i][j] = scanner.nextInt();
 			}
 		}
 		simpleOperation simple = new simpleOperation();
-//		result = simple.transpose(matrix);
-//		simple.printMatrix(result);
-//		System.out.println(simple.isIdentity(matrix));
+		double [][] matrixGauss = new double[rows][cols];
+//		double [][] matrixJordan = new double[rows][cols];
+		double [][] matrixInverse = new double[rows][cols];
+//		matrixGauss = simple.gauss(m);
+//		System.out.println("Matrix hasil gauss: \n");
+//		simple.printMatrix(matrixGauss);
+//		System.out.println("Matrix hasil gauss jordan: \n");
+//		simple.printMatrix(matrixJordan);
+//		matrixInverse = simple.inversGaussJordan(m);
+		System.out.println("Matrix hasil invers: ");
+		simple.printMatrix(matrixInverse);
 //		
-		
 
-
-	
-		
 	}
+	
+
 	
 }
