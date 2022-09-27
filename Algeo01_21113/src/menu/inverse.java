@@ -8,7 +8,8 @@ import javax.swing.*;
 public class inverse extends JFrame implements ActionListener{
 	JButton button, selectFile, sendMatrix, sendMatrixSize;
 	JLabel labelInput, welcome;
-	JTextField inputRows, inputCols;
+	JComboBox caraInput, method;
+	JTextField inputOrde;
 	JPanel inputMatrix;
 	JMenuBar menuBar;
 	JMenu home, operation;
@@ -55,28 +56,44 @@ public class inverse extends JFrame implements ActionListener{
 		operation.add(interpolasiBicubic);
 		operation.add(regresi);
 		
+		welcome = new JLabel("Welcome to Inverse Section! \n");
+		this.add(welcome);
 		
+		String[] tipe = {"Input from keyboard", "File"};
+		caraInput = new JComboBox(tipe);
+		this.add(caraInput);
+		caraInput.addActionListener(this);
+	
 		// select file from dir
+		inputMatrix = new JPanel();
+		this.add(inputMatrix);
 		selectFile = new JButton("Select File");
 		selectFile.addActionListener(this);
-		this.add(selectFile);
+		inputMatrix.add(selectFile);
+		selectFile.setEnabled(false);
+		
+		
 		this.setJMenuBar(menuBar);
 		
 		
-		// send matrix 
-		inputRows = new JTextField();
-		inputRows.setPreferredSize(new Dimension(50, 30));
-		inputRows.addActionListener(this);
-		this.add(inputRows);
-		
-		inputCols = new JTextField();
-		inputCols.setPreferredSize(new Dimension(50, 30));
-		inputCols.addActionListener(null);
-		this.add(inputCols);
+		// input matrix keyboard
+		JLabel orde = new JLabel("Orde matrix");
+		this.add(orde);
+		inputOrde = new JTextField();
+		inputOrde.setPreferredSize(new Dimension(50, 30));
+		inputOrde.addActionListener(this);
+		inputMatrix.add(inputOrde);
+		inputOrde.setEnabled(false);
 		
 		sendMatrixSize = new JButton("Submit");
 		sendMatrixSize.addActionListener(this);
-		this.add(sendMatrixSize);
+		sendMatrixSize.setEnabled(false);
+		inputMatrix.add(sendMatrixSize);
+
+		String[] listMethod= {"Invers dengan Gauss Jordan", "Invers dengan kofaktor"};
+		method = new JComboBox(listMethod);
+		this.add(method);
+		method.addActionListener(this);
 		
 		
 		this.setVisible(true);
@@ -108,6 +125,19 @@ public class inverse extends JFrame implements ActionListener{
 		else if(e.getSource() == regresi) {
 			inverse frame = new inverse();
 		}
+		else if(e.getSource() == caraInput) {
+			String cara = (String) caraInput.getSelectedItem();
+			if(cara == "File") {
+				sendMatrixSize.setEnabled(false);
+				inputOrde.setEnabled(false);
+				selectFile.setEnabled(true);
+			}
+			else {
+				selectFile.setEnabled(false);
+				sendMatrixSize.setEnabled(true);
+				inputOrde.setEnabled(true);
+			}
+		}
 		else if(e.getSource() == selectFile) {
 			JFileChooser fileChooser = new JFileChooser();
 			int response = fileChooser.showOpenDialog(null);
@@ -130,11 +160,10 @@ public class inverse extends JFrame implements ActionListener{
 				}
 			}
 			
-			
 		}
 		else if(e.getSource() == sendMatrixSize) {
-			rows = Integer.parseInt(inputRows.getText());
-			cols = Integer.parseInt(inputCols.getText());
+			rows = Integer.parseInt(inputOrde.getText());
+			cols = rows;
 			matrix = new double[rows][cols];
 			inputMatrix = new JPanel();
 			JLabel input = new JLabel("Masukkan matrix: ");
@@ -157,6 +186,9 @@ public class inverse extends JFrame implements ActionListener{
 				}
 
 			sendMatrix.setEnabled(false);
+			
+		}
+		else if(e.getSource() == method) {
 			
 		}
 		
