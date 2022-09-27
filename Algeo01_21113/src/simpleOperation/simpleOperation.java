@@ -1,4 +1,5 @@
 package simpleOperation;
+import java.lang.Math;
 
 public class simpleOperation {
 	
@@ -117,8 +118,41 @@ public class simpleOperation {
 		return result;
 	}
 	
+	public double[][]matrixMinor(int x, int y, double matrix[][]){ 
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double[][]result = new double[rows-1][cols-1];
+		int baris = 0;
+		int kolom = 0;
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				if(i == x || j == y) {
+					continue;
+				}
+				else {
+					result[baris][kolom] = matrix[i][j];
+					if(kolom < (cols-2) && (baris <= (rows-2))) {
+						kolom++;
+					}
+					else if(kolom >= (cols-2) && (baris < (rows-2))){
+						kolom = 0;
+						baris++;
+					}
+					
+				}
+			}
+		}
+		return result;
+	}
 	public double[][]matrixKofaktor(double[][]matrix){
-		double [][] result = null;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double [][] result = new double[rows][cols];
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				result[i][j] = Math.pow(-1, i+j)*determinanOBE(matrix);
+			}
+		}
 		return result;
 	}
 	
@@ -230,8 +264,16 @@ public class simpleOperation {
 	
 	//Determinan matrix dengan ekspansi kofaktor
 	public double determinanKofaktor(double[][]matrix) {
-		double result = 0;
+		int result = 0;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double [][] kofaktor = new double[rows][cols];
+		kofaktor = matrixKofaktor(matrix);
+		for(int i = 0; i < rows; i++) {
+			result += (matrix[i][0] * kofaktor[i][0]);
+		}
 		return result;
+		
 	}
 	
 // INVERS MATRIX

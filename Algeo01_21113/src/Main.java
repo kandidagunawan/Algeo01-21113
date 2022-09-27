@@ -21,17 +21,18 @@ public class Main {
 			}
 		}
 		simpleOperation simple = new simpleOperation();
-		double [][] matrixGauss = new double[rows][cols];
+//		double [][] matrixGauss = new double[rows][cols];
 //		double [][] matrixJordan = new double[rows][cols];
-		double [][] matrixInverse = new double[rows][cols];
+//		double [][] matrixInverse = new double[rows][cols];
 //		matrixGauss = simple.gauss(m);
 //		System.out.println("Matrix hasil gauss: \n");
 //		simple.printMatrix(matrixGauss);
 //		System.out.println("Matrix hasil gauss jordan: \n");
 //		simple.printMatrix(matrixJordan);
 //		matrixInverse = simple.inversGaussJordan(m);
-		System.out.println("Matrix hasil invers: ");
-		simple.printMatrix(matrixInverse);
+		double determinan = simple.determinanOBE(m);
+		System.out.println(determinan);
+		
 //		
 
 	}
