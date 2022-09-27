@@ -85,12 +85,20 @@ public class simpleOperation {
 	
 	
 	// OPERASI SEDERHANA PADA MATRIX
-	public double[][]plusMinMatrix(double[][]matrix1, double[][]matrix2){
+	public double[][]plusMinMatrix(double[][]matrix1, double[][]matrix2, boolean asc){
 		
 		double result[][] = new double[matrix1.length][matrix1[0].length];
-		for(int i = 0; i < matrix1.length; i++) {
-			for(int j = 0; j < matrix1.length; j++) {
-				result[i][j] = matrix1[i][j] + matrix2[i][j];
+		if (asc == true) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] + matrix2[i][j];
+				}
+			}
+		} else if (asc == false) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] - matrix2[i][j];
+				}
 			}
 		}
 		return result;
