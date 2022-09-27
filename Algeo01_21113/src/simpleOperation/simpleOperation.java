@@ -81,7 +81,8 @@ public class simpleOperation {
 	}
 	
 	public boolean isSquare(double [][] matrix) {
-		return true; // ini gw isi true supaya ga error aj di eclipsenya, nanti realisasi sendiri y
+		
+		return (matrix.length == matrix[0].length); 
 	}
 	
 	
@@ -96,12 +97,30 @@ public class simpleOperation {
 		}
 		return result;
 	}
+	
 	public double[][] perkalianDuaMatrix(double[][]matrix1, double[][]matrix2){
-		double[][]result = null;
+		int row = matrix1.length;
+		int col = matrix2[0].length;
+		double[][]result = new double[row][col];
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				result[i][j] = 0;
+				for(int k = 0; k < matrix1[0].length; k++) {
+					result[i][j] += (matrix1[i][k] * matrix2[k][j]);
+				}
+			}
+		}
 		return result;
 	}
 	public double [][] perkalianMatrixConst(double[][]matrix, double d){
-		double[][] result = null;
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double[][] result = new double[rows][cols];
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < rows; j++) {
+				result[i][j] *= d;
+			}
+		}
 		return result;
 	}
 	
@@ -203,7 +222,6 @@ public class simpleOperation {
 					matrix[brs][kol] -= matrix[temp1][kol] * c;
 				}
 			}
-		
 		
 		
 			
