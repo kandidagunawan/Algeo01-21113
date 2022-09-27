@@ -232,10 +232,7 @@ public class simpleOperation {
 				i++;
 			} else {
 				j++;
-		}
-		
-			
-			
+		}	
 		}
 		
 		return matrix;
