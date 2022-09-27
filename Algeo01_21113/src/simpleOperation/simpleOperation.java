@@ -164,8 +164,8 @@ public class simpleOperation {
 			int temp2 = i;
 			boolean foundnotZero = false;
 			
-			for (int brs = i; brs < rows; rows++) {
-				for (int kol = i; kol < cols; cols++) {
+			for (int brs = i; brs < rows; brs++) {
+				for (int kol = i; kol < cols; kol++) {
 					if(matrix[brs][kol] != 0) {
 						foundnotZero = true;    
 						temp1 = brs;
@@ -201,7 +201,7 @@ public class simpleOperation {
 			}	
 		}
 		
-
+		tukerNol(matrix);
 		return matrix;
 	}
 	public double[][]gaussJordan(double[][]matrix){
