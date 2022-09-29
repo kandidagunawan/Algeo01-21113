@@ -84,14 +84,25 @@ public class simpleOperation {
 	}
 
 	// OPERASI SEDERHANA PADA MATRIX
-	public double[][] plusMinMatrix(double[][] matrix1, double[][] matrix2) {
 
-		double result[][] = null;
-		for (int i = 0; i < matrix1.length; i++) {
-			for (int j = 0; j < matrix1.length; j++) {
-				result[i][j] = matrix1[i][j] + matrix2[i][j];
+	public double[][]plusMinMatrix(double[][]matrix1, double[][]matrix2, boolean asc){
+		
+		double result[][] = new double[matrix1.length][matrix1[0].length];
+		if (asc == true) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] + matrix2[i][j];
+				}
 			}
-		}
+		} else if (asc == false) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] - matrix2[i][j];
+				}
+
+		
+		  }
+    }
 		return result;
 	}
 
@@ -159,6 +170,36 @@ public class simpleOperation {
 		}
 		return result;
 	}
+  
+	public double[][]tukerNol(double[][]matrix){
+		int i;
+		int tempCount;
+		int rows = matrix.length;       
+		int cols = matrix[0].length;
+		int []counter = new int[rows];
+		for(i = 0; i < rows; i++) {
+			int j = 0;
+			while(j < cols && matrix[i][j] == 0) {
+				counter[i]++;
+				j++;
+			}
+		}
+		
+		//		TUKAR BARIS BERDASARKAN JUMLAH 0 DI TIAP BARIS (BUBBLE SORT)
+		for(i = 0; i < rows-1; i++) {
+			for(int j = 0; j < (rows-i-1); j++) {
+				if(counter[j] > counter[j+1]) {
+					tukarBaris(matrix, j, j+1);
+					tempCount = counter[j+1];
+					counter[j+1] = counter[j];
+					counter[j] = tempCount;
+				}
+			}
+		}
+		
+		return matrix;
+	}
+	
 
 	public double[][] matrixKofaktor(double[][] matrix) {
 		int rows = matrix.length;
@@ -172,22 +213,23 @@ public class simpleOperation {
 		return result;
 	}
 
+
 //	ELIMINASI GAUSS & GAUSS JORDAN
 	public double[][] gauss(double[][] matrix) {
 
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		int i;
-
+		tukerNol(matrix);
 		for (i = 0; i < matrix.length; i++) {
-			int temp1 = i;
+			int temp1 = i; //i= 0, tempi = 0
 			int temp2 = i;
 			boolean foundnotZero = false;
-
-			for (int brs = i; brs < rows; rows++) {
-				for (int kol = i; kol < cols; cols++) {
-					if (matrix[brs][kol] != 0) {
-						foundnotZero = true;
+			
+			for (int brs = i; brs < rows; brs++) {
+				for (int kol = i; kol < cols; kol++) {
+					if(matrix[brs][kol] != 0) {
+						foundnotZero = true;    
 						temp1 = brs;
 						temp2 = kol;
 						break;
@@ -200,9 +242,9 @@ public class simpleOperation {
 			if (!foundnotZero) {
 				break;
 			}
-
-			double temp;
-			if (temp1 != i) { // switch switch heyyyyyy
+			
+			
+			if (temp1 != i) { //switch switch heyyyyyy
 				for (int j = 0; j < cols; j++) {
 					tukarBaris(matrix, i, j);
 				}
@@ -218,10 +260,11 @@ public class simpleOperation {
 				for (int kol = temp2; kol < cols; kol++) {
 					matrix[brs][kol] -= matrix[temp1][kol] * c;
 				}
-			}
-
+			}	
 		}
+		
 
+    tukerNol(matrix);
 		return matrix;
 	}
 
@@ -245,10 +288,9 @@ public class simpleOperation {
 				i++;
 			} else {
 				j++;
-			}
-
+		}	
 		}
-
+		
 		return matrix;
 	}
 
