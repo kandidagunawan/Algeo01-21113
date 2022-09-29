@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import simpleOperation.*;
 
@@ -146,11 +145,8 @@ public class Main {
 			}
 		}
 
-		
 
 
 	}
-	
 
-	
 }
