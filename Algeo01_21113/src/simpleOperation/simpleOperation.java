@@ -79,7 +79,6 @@ public class simpleOperation {
 	}
 
 	public boolean isSquare(double[][] matrix) {
-
 		return (matrix.length == matrix[0].length);
 	}
 
@@ -99,8 +98,6 @@ public class simpleOperation {
 				for(int j = 0; j < matrix1.length; j++) {
 					result[i][j] = matrix1[i][j] - matrix2[i][j];
 				}
-
-		
 		  }
     }
 		return result;
@@ -130,6 +127,7 @@ public class simpleOperation {
 				result[i][j] *= d;
 			}
 		}
+
 		return result;
 	}
 
@@ -145,6 +143,7 @@ public class simpleOperation {
 		}
 		return result;
 	}
+
 
 	public double[][] matrixMinor(int x, int y, double matrix[][]) {
 		int rows = matrix.length;
@@ -171,6 +170,7 @@ public class simpleOperation {
 		return result;
 	}
   
+
 	public double[][]tukerNol(double[][]matrix){
 		int i;
 		int tempCount;
@@ -210,7 +210,7 @@ public class simpleOperation {
 				result[i][j] = Math.pow(-1, i + j) * determinanOBE(matrix);
 			}
 		}
-		return result;
+		return matrix;
 	}
 
 
@@ -262,9 +262,7 @@ public class simpleOperation {
 				}
 			}	
 		}
-		
-
-    tukerNol(matrix);
+		tukerNol(matrix);
 		return matrix;
 	}
 
@@ -298,20 +296,67 @@ public class simpleOperation {
 
 	// Determinan matrix dengan reduksi baris OBE
 	public double determinanOBE(double[][] matrix) {
-		matrix = gauss(matrix);
 		double det = 1.0;
+		int count = 0;
 		int row = matrix.length;
-		int col = matrix.length;
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++)
-				if (i == j) {
-					det *= matrix[i][j];
-				}
+		int col = matrix[0].length;
+		double []tempRow = new double[100];
+		double [][]matriksOBE = new double[row][col];
+		double temp;
+		double total = 1;
+		
+		//copymatrix
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				matriksOBE[i][j] = matrix[i][j];
+			}
 		}
-
-		return det;
+		int i, j, k;
+		for (i = 0; i < col; i++) {
+			int a = i;
+			
+			while(a < col && matriksOBE[a][i] == 0)
+			{
+				a++;
+			}
+			
+			if (a == col)
+			{//tiap elemen diagonal 0 semua berarti
+				return 0;
+			}
+			
+			if (a != i)
+			{ //ternyata tidak semuanya nol, di switch mana yang 0 dan ga nol
+				for(j = 0; j < col; j++)
+				{
+					temp = matriksOBE[a][j];
+					matriksOBE[a][j] = matriksOBE[i][j];
+					matriksOBE[i][j] = temp;
+				}
+				det *= -1; //itung berapa kali tuker baris
+			}
+			
+			for (j = 0; j < col; j++) {
+				tempRow[j] = matriksOBE[i][j];
+			}
+			
+			for(j = i+1; j < col; j++) {
+				double temp1 = tempRow[i];
+				double temp2 = matriksOBE[j][i];
+				for(k = 0; k < col; k++) {
+					matriksOBE[j][k] = temp1 * matriksOBE[j][k] - temp2 * tempRow[k];
+				}
+				total *= temp1;
+			}	
+		}
+			//Hitung determinan
+		for(i = 0; i < col; i++)
+		{
+			det *= matriksOBE[i][i];
+		}
+		return det/total;
 	}
+	
 
 	// Determinan matrix dengan ekspansi kofaktor
 	public double determinanKofaktor(double[][] matrix) {
@@ -324,6 +369,7 @@ public class simpleOperation {
 			result += (matrix[i][0] * kofaktor[i][0]);
 		}
 		return result;
+
 
 	}
 
@@ -409,6 +455,7 @@ public class simpleOperation {
 			}
 		}
 		return identitas;
+
 	}
 
 	// Matrix invers dengan adjoin
