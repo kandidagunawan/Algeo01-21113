@@ -100,23 +100,36 @@ public class Main {
 				if(metodeSPL == 1) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
 						simple.printMatrix(spl.SPLGauss1(matrix));
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
+					else if(spl.isManySolution(matrix)) {
+//						NANTI DILENGKAPI
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+					}
+					else if(spl.isNoSolution(matrix)) {
+						System.out.println("SPL tidak memiliki solusi");
+					}
+					
 				}
 				else if(metodeSPL == 2) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
 						spl.printSolusi1(spl.SPLGaussJordan1(matrix));
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isNoSolution(matrix)) {
 						System.out.println("SPL tersebut tidak memiliki solusi");
+						
 					}
 					else if(spl.isManySolution(matrix)) {
 						/////// AYO INI DIKERJAAA!!!
 						System.out.println("Solusinya ada banyak!");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 				}
 				else if(metodeSPL == 3) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
 						spl.printSolusi1(spl.SPLMatrixBalikan(matrix));
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isManySolution(matrix)){
 						System.out.println("SPL tidak bisa diselesaikan dengan matrix balikan");
@@ -128,6 +141,7 @@ public class Main {
 				else if(metodeSPL == 4) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
 						spl.printSolusi1(spl.SPLCramer(matrix));
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isManySolution(matrix)){
 						System.out.println("SPL tidak bisa diselesaikan dengan metode cramer");
@@ -197,9 +211,11 @@ public class Main {
 				int metodeMatrix = scanner.nextInt();
 				if(metodeMatrix == 1) {
 					System.out.println("Nilai determinan matrix : " + simple.determinanOBE(matrix));
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 				}
 				else if(metodeMatrix == 2) {
 					System.out.println("Nilai determinan matrix : " + simple.determinanKofaktor(matrix));
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 				}
 				else {
 					System.out.println("Anda memilih pilihan yang salah");
@@ -264,12 +280,15 @@ public class Main {
 				System.out.println("Pilih cara menentukan invers: ");
 				System.out.println("1. Invers dengan Gauss Jordan");
 				System.out.println("2. Invers dengan matrix adjoin");
+				// INI JANGAN LUPA DIBUAT KONDISI KALO MATRIX GABISA DIINVERSIN
 				int metodeMatrix = scanner.nextInt();
 				if(metodeMatrix == 1) {
 					simple.printMatrix(simple.inversGaussJordan(matrix));
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 				}
 				else if(metodeMatrix == 2) {
 					simple.printMatrix(simple.inversWithAdjoin(matrix));
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 				}
 				else {
 					System.out.println("Anda memilih pilihan yang salah");

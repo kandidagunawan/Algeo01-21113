@@ -34,7 +34,6 @@ public class bicubic {
 
 		}
 		
-		
 		pasanganij = new int[16][2];
 		int x1 = 0;
 		int y1 = 0;
