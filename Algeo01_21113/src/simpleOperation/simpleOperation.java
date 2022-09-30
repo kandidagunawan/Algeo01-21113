@@ -1,9 +1,13 @@
 package simpleOperation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.Math;
+import java.util.Scanner;
 
 public class simpleOperation {
 
+	Scanner scanner = new Scanner(System.in);
 	public void printMatrix(double[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
@@ -79,19 +83,27 @@ public class simpleOperation {
 	}
 
 	public boolean isSquare(double[][] matrix) {
-
 		return (matrix.length == matrix[0].length);
 	}
 
 	// OPERASI SEDERHANA PADA MATRIX
-	public double[][] plusMinMatrix(double[][] matrix1, double[][] matrix2) {
 
-		double result[][] = null;
-		for (int i = 0; i < matrix1.length; i++) {
-			for (int j = 0; j < matrix1.length; j++) {
-				result[i][j] = matrix1[i][j] + matrix2[i][j];
+	public double[][]plusMinMatrix(double[][]matrix1, double[][]matrix2, boolean asc){
+		
+		double result[][] = new double[matrix1.length][matrix1[0].length];
+		if (asc == true) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] + matrix2[i][j];
+				}
 			}
-		}
+		} else if (asc == false) {
+			for(int i = 0; i < matrix1.length; i++) {
+				for(int j = 0; j < matrix1.length; j++) {
+					result[i][j] = matrix1[i][j] - matrix2[i][j];
+				}
+		  }
+    }
 		return result;
 	}
 
@@ -116,9 +128,10 @@ public class simpleOperation {
 		double[][] result = new double[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < rows; j++) {
-				result[i][j] *= d;
+				result[i][j] = d * matrix[i][j];
 			}
 		}
+
 		return result;
 	}
 
@@ -134,6 +147,7 @@ public class simpleOperation {
 		}
 		return result;
 	}
+
 
 	public double[][] matrixMinor(int x, int y, double matrix[][]) {
 		int rows = matrix.length;
@@ -159,6 +173,37 @@ public class simpleOperation {
 		}
 		return result;
 	}
+  
+
+	public double[][]tukerNol(double[][]matrix){
+		int i;
+		int tempCount;
+		int rows = matrix.length;       
+		int cols = matrix[0].length;
+		int []counter = new int[rows];
+		for(i = 0; i < rows; i++) {
+			int j = 0;
+			while(j < cols && matrix[i][j] == 0) {
+				counter[i]++;
+				j++;
+			}
+		}
+		
+		//		TUKAR BARIS BERDASARKAN JUMLAH 0 DI TIAP BARIS (BUBBLE SORT)
+		for(i = 0; i < rows-1; i++) {
+			for(int j = 0; j < (rows-i-1); j++) {
+				if(counter[j] > counter[j+1]) {
+					tukarBaris(matrix, j, j+1);
+					tempCount = counter[j+1];
+					counter[j+1] = counter[j];
+					counter[j] = tempCount;
+				}
+			}
+		}
+		
+		return matrix;
+	}
+	
 
 	public double[][] matrixKofaktor(double[][] matrix) {
 		int rows = matrix.length;
@@ -166,11 +211,12 @@ public class simpleOperation {
 		double[][] result = new double[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				result[i][j] = Math.pow(-1, i + j) * determinanOBE(matrix);
+				result[i][j] = Math.pow(-1, i + j) * determinanOBE(matrixMinor(i, j, matrix));
 			}
 		}
 		return result;
 	}
+
 
 //	ELIMINASI GAUSS & GAUSS JORDAN
 	public double[][] gauss(double[][] matrix) {
@@ -178,16 +224,16 @@ public class simpleOperation {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		int i;
-
+		tukerNol(matrix);
 		for (i = 0; i < matrix.length; i++) {
-			int temp1 = i;
+			int temp1 = i; //i= 0, tempi = 0
 			int temp2 = i;
 			boolean foundnotZero = false;
-
-			for (int brs = i; brs < rows; rows++) {
-				for (int kol = i; kol < cols; cols++) {
-					if (matrix[brs][kol] != 0) {
-						foundnotZero = true;
+			
+			for (int brs = i; brs < rows; brs++) {
+				for (int kol = i; kol < cols; kol++) {
+					if(matrix[brs][kol] != 0) {
+						foundnotZero = true;    
 						temp1 = brs;
 						temp2 = kol;
 						break;
@@ -200,9 +246,9 @@ public class simpleOperation {
 			if (!foundnotZero) {
 				break;
 			}
-
-			double temp;
-			if (temp1 != i) { // switch switch heyyyyyy
+			
+			
+			if (temp1 != i) { //switch switch heyyyyyy
 				for (int j = 0; j < cols; j++) {
 					tukarBaris(matrix, i, j);
 				}
@@ -218,10 +264,9 @@ public class simpleOperation {
 				for (int kol = temp2; kol < cols; kol++) {
 					matrix[brs][kol] -= matrix[temp1][kol] * c;
 				}
-			}
-
+			}	
 		}
-
+		tukerNol(matrix);
 		return matrix;
 	}
 
@@ -245,10 +290,9 @@ public class simpleOperation {
 				i++;
 			} else {
 				j++;
-			}
-
+		}	
 		}
-
+		
 		return matrix;
 	}
 
@@ -256,20 +300,67 @@ public class simpleOperation {
 
 	// Determinan matrix dengan reduksi baris OBE
 	public double determinanOBE(double[][] matrix) {
-		matrix = gauss(matrix);
 		double det = 1.0;
+		int count = 0;
 		int row = matrix.length;
-		int col = matrix.length;
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++)
-				if (i == j) {
-					det *= matrix[i][j];
-				}
+		int col = matrix[0].length;
+		double []tempRow = new double[100];
+		double [][]matriksOBE = new double[row][col];
+		double temp;
+		double total = 1;
+		
+		//copymatrix
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				matriksOBE[i][j] = matrix[i][j];
+			}
 		}
-
-		return det;
+		int i, j, k;
+		for (i = 0; i < col; i++) {
+			int a = i;
+			
+			while(a < col && matriksOBE[a][i] == 0)
+			{
+				a++;
+			}
+			
+			if (a == col)
+			{//tiap elemen diagonal 0 semua berarti
+				return 0;
+			}
+			
+			if (a != i)
+			{ //ternyata tidak semuanya nol, di switch mana yang 0 dan ga nol
+				for(j = 0; j < col; j++)
+				{
+					temp = matriksOBE[a][j];
+					matriksOBE[a][j] = matriksOBE[i][j];
+					matriksOBE[i][j] = temp;
+				}
+				det *= -1; //itung berapa kali tuker baris
+			}
+			
+			for (j = 0; j < col; j++) {
+				tempRow[j] = matriksOBE[i][j];
+			}
+			
+			for(j = i+1; j < col; j++) {
+				double temp1 = tempRow[i];
+				double temp2 = matriksOBE[j][i];
+				for(k = 0; k < col; k++) {
+					matriksOBE[j][k] = temp1 * matriksOBE[j][k] - temp2 * tempRow[k];
+				}
+				total *= temp1;
+			}	
+		}
+			//Hitung determinan
+		for(i = 0; i < col; i++)
+		{
+			det *= matriksOBE[i][i];
+		}
+		return det/total;
 	}
+	
 
 	// Determinan matrix dengan ekspansi kofaktor
 	public double determinanKofaktor(double[][] matrix) {
@@ -282,6 +373,7 @@ public class simpleOperation {
 			result += (matrix[i][0] * kofaktor[i][0]);
 		}
 		return result;
+
 
 	}
 
@@ -367,6 +459,7 @@ public class simpleOperation {
 			}
 		}
 		return identitas;
+
 	}
 
 	// Matrix invers dengan adjoin
@@ -384,5 +477,45 @@ public class simpleOperation {
 
 	}
 	
+	public double[][]matrixFileInput1() {
+		double matrix[][] = null;
+		String directory;
+		System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+		directory = scanner.nextLine();
+		File temp = new File(directory);
+		Scanner file;
+		Scanner matrixIn;
+		try {
+			file = new Scanner(temp);
+			Scanner split = new Scanner(file.nextLine());
+			int n = 0;
+			while(split.hasNextDouble()) {
+				n++;
+				split.nextDouble();
+			}
+			matrixIn = new Scanner(temp);
+			Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+			matrix = new double[n][n];
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < n; j++) {
+					matrix[i][j] = splitMatrix.nextDouble();
+				}
+				if(matrixIn.hasNextLine()) {
+					splitMatrix = new Scanner(matrixIn.nextLine());
 
+				}
+						
+			}
+		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return matrix;
+	
+	
+
+	}
+	
 }
