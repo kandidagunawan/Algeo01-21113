@@ -1,9 +1,13 @@
 package simpleOperation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.Math;
+import java.util.Scanner;
 
 public class simpleOperation {
 
+	Scanner scanner = new Scanner(System.in);
 	public void printMatrix(double[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
@@ -473,5 +477,45 @@ public class simpleOperation {
 
 	}
 	
+	public double[][]matrixFileInput1() {
+		double matrix[][] = null;
+		String directory;
+		System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+		directory = scanner.nextLine();
+		File temp = new File(directory);
+		Scanner file;
+		Scanner matrixIn;
+		try {
+			file = new Scanner(temp);
+			Scanner split = new Scanner(file.nextLine());
+			int n = 0;
+			while(split.hasNextDouble()) {
+				n++;
+				split.nextDouble();
+			}
+			matrixIn = new Scanner(temp);
+			Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+			matrix = new double[n][n];
+			for(int i = 0; i < n; i++) {
+				for(int j = 0; j < n; j++) {
+					matrix[i][j] = splitMatrix.nextDouble();
+				}
+				if(matrixIn.hasNextLine()) {
+					splitMatrix = new Scanner(matrixIn.nextLine());
 
+				}
+						
+			}
+		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return matrix;
+	
+	
+
+	}
+	
 }

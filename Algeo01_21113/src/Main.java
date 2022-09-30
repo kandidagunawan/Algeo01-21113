@@ -1,4 +1,9 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+import java.io.IOException;
+import java.io.BufferedReader;
 import simpleOperation.*;
 
 import simpleOperation.simpleOperation;
@@ -7,6 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		simpleOperation simple = new simpleOperation();
 		Scanner scanner = new Scanner(System.in);
+
 		boolean running = true;
 		while(running) {
 			System.out.println("MENU");
@@ -19,17 +25,68 @@ public class Main {
 			System.out.println("7. Keluar");
 			System.out.println("Silahkan pilih menu: ");
 			int choice = scanner.nextInt();
+			scanner.nextLine();
+			System.out.println();
 			if(choice == 1) {
-				System.out.println("Masukkan banyak persamaan yang akan diinputkan (m): ");
-				int m = scanner.nextInt();
-				System.out.println("Masukkan banyak variabel yang dipakai(n): ");
-				int n = scanner.nextInt();
-				System.out.println("Silahkan masukkan persamaan SPL : ");
-				double matrix[][] = new double[m][n];
-				for(int i = 0; i < m; i++) {
-					for(int j = 0; j < n; j++) {
-						matrix[i][j] = scanner.nextDouble();
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				if(inputType == 1) {
+					System.out.println("Masukkan banyak persamaan yang akan diinputkan (m): ");
+					int m = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println("Masukkan banyak variabel yang dipakai(n): ");
+					int n = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println("Silahkan masukkan persamaan SPL : ");
+//					C:/Users/kandi/Downloads/mat.txt
+					double matrix[][] = new double[m][n];
+					for(int i = 0; i < m; i++) {
+						for(int j = 0; j < n; j++) {
+							matrix[i][j] = scanner.nextDouble();
+							scanner.nextLine();
+						}
 					}
+				}
+				else if(inputType == 2){
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						int n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						double [][] matrix = new double[n][n];
+						for(int i = 0; i < n; i++) {
+							for(int j = 0; j < n; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+
+							}
+									
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	
+//
+					
+					
 				}
 				System.out.println("Silahkan pilih metode penyelesaian SPL: ");
 				System.out.println("1. Metode eliminasi Gauss");
@@ -52,14 +109,57 @@ public class Main {
 				
 			}
 			else if(choice == 2) {
-				System.out.println("Silahkan masukkan orde matrix: ");
-				int n = scanner.nextInt();
-				System.out.println("Silahkan masukkan matrix anda: ");
-				double matrix[][] = new double[n][n];
-				for(int i = 0; i < n; i++) {
-					for(int j = 0; j < n; j++) {
-						matrix[i][j] = scanner.nextDouble();
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				double matrix[][] = null;
+				if(inputType == 1) {
+					System.out.println("Silahkan masukkan orde matrix: ");
+					int n = scanner.nextInt();
+					System.out.println("Silahkan masukkan matrix anda: ");
+					matrix = new double[n][n];
+					for(int i = 0; i < n; i++) {
+						for(int j = 0; j < n; j++) {
+							matrix[i][j] = scanner.nextDouble();
+						}
 					}
+				}
+				else if(inputType == 2) {
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						int n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						matrix = new double[n][n];
+						for(int i = 0; i < n; i++) {
+							for(int j = 0; j < n; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+
+							}
+									
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
 				System.out.println("Pilih cara menentukan determinan: ");
 				System.out.println("1. Metode Gauss Jordan");
@@ -78,15 +178,59 @@ public class Main {
 				
 			}
 			else if(choice == 3) {
-				System.out.println("Silahkan masukkan orde matrix: ");
-				int n = scanner.nextInt();
-				System.out.println("Silahkan masukkan matrix anda: ");
-				double matrix[][] = new double[n][n];
-				for(int i = 0; i < n; i++) {
-					for(int j = 0; j < n; j++) {
-						matrix[i][j] = scanner.nextDouble();
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				double matrix[][] = null;
+				if(inputType == 1) {
+					System.out.println("Silahkan masukkan orde matrix: ");
+					int n = scanner.nextInt();
+					System.out.println("Silahkan masukkan matrix anda: ");
+					matrix= new double[n][n];
+					for(int i = 0; i < n; i++) {
+						for(int j = 0; j < n; j++) {
+							matrix[i][j] = scanner.nextDouble();
+						}
 					}
 				}
+//				C:/Users/kandi/Downloads/invers.txt
+				else if(inputType == 2) {
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						int n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						matrix = new double[n][n];
+						for(int i = 0; i < n; i++) {
+							for(int j = 0; j < n; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+
+							}
+									
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
 				System.out.println("Pilih cara menentukan invers: ");
 				System.out.println("1. Invers dengan Gauss Jordan");
 				System.out.println("2. Invers dengan matrix adjoin");
