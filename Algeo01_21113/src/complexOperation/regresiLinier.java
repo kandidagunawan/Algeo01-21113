@@ -1,6 +1,7 @@
 package complexOperation;
 
 public class regresiLinier {
+	SPL spl = new SPL();
 	public double[][] matrixPersamaan(double matrix[][]){
 		int row = matrix.length;
 		int col = matrix[0].length;
@@ -32,8 +33,38 @@ public class regresiLinier {
 				}
 			}
 		}
-		
 		return persamaan;
 	}
+	public double[][]koefisien(double matrix[][]){
+		int rows = matrix.length;
+		int cols = matrix[0].length;
+		double result[][] = new double[rows][1];
+		result = spl.SPLGaussJordan1(matrix);
+		return result;
+	}
+	
+	public void printRegresi(double koefisien[][], double inputTaksir[][]) {
+		int rows = koefisien.length;
+		System.out.print("f(x) = ");
+		for(int i = 0; i < rows; i++) {
+			System.out.print(koefisien[i][0]);
+			if(i > 0) {
+				System.out.print("x"+i);
+			}
+			if(i != (rows-1)) {
+				System.out.print(" + ");
+			}
+		}
+		System.out.print(",");
+		double taksiran = 0;
+		taksiran += koefisien[0][0];
+		for(int i = 0; i < inputTaksir.length; i++) {
+			taksiran += (koefisien[i+1][0])*inputTaksir[i][0];
+		}
+		System.out.print("f(xk) = " + taksiran);
+		System.out.println();
+	}
+	
+	
 	
 }
