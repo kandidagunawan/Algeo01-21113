@@ -50,11 +50,11 @@ public class SPL {
 			int j = (cols-2);
 			double total = matrixOBE[i][cols-1];
 			while(j >=  0 && matrixOBE[i][j] != 0) {
-				if(matrixOBE[i][j-1] == 0 || (j-1 == -1)) {
+				if((j-1 == -1)|| (matrixOBE[i][j-1] == 0)) {
 					solusi[i][0] = total / (matrixOBE[i][j]);
 				}
 				else {
-					total += (solusi[j][0] * matrixOBE[i][j]);
+					total -= (solusi[j][0] * matrixOBE[i][j]);
 				}
 				j--;
 			}
