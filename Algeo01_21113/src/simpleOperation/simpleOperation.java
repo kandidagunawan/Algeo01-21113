@@ -128,7 +128,7 @@ public class simpleOperation {
 		double[][] result = new double[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < rows; j++) {
-				result[i][j] *= d;
+				result[i][j] = d * matrix[i][j];
 			}
 		}
 
@@ -211,10 +211,10 @@ public class simpleOperation {
 		double[][] result = new double[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				result[i][j] = Math.pow(-1, i + j) * determinanOBE(matrix);
+				result[i][j] = Math.pow(-1, i + j) * determinanOBE(matrixMinor(i, j, matrix));
 			}
 		}
-		return matrix;
+		return result;
 	}
 
 
