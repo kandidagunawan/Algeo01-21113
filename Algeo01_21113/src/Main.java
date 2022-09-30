@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
@@ -7,9 +8,10 @@ import java.io.BufferedReader;
 import simpleOperation.*;
 import complexOperation.*;
 
-import simpleOperation.simpleOperation;
+//import simpleOperation.simpleOperation;
 
 public class Main {
+
 	public static void main(String[] args) {
 		simpleOperation simple = new simpleOperation();
 		SPL spl = new SPL();
@@ -316,6 +318,7 @@ public class Main {
 				System.out.println("Menu yang anda pilih tidak ada");
 			}
 		}
+
 
 
 
