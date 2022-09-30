@@ -5,12 +5,14 @@ import java.util.NoSuchElementException;
 import java.io.IOException;
 import java.io.BufferedReader;
 import simpleOperation.*;
+import complexOperation.*;
 
 import simpleOperation.simpleOperation;
 
 public class Main {
 	public static void main(String[] args) {
 		simpleOperation simple = new simpleOperation();
+		SPL spl = new SPL();
 		Scanner scanner = new Scanner(System.in);
 
 		boolean running = true;
@@ -31,22 +33,23 @@ public class Main {
 				System.out.println("Pilih cara input data: ");
 				System.out.println("1. Input dari keyboard");
 				System.out.println("2. Input dari file");
+				double matrix[][] = null;
 				int inputType = scanner.nextInt();
 				scanner.nextLine();
 				if(inputType == 1) {
 					System.out.println("Masukkan banyak persamaan yang akan diinputkan (m): ");
 					int m = scanner.nextInt();
-					scanner.nextLine();
+					//scanner.nextLine();
 					System.out.println("Masukkan banyak variabel yang dipakai(n): ");
 					int n = scanner.nextInt();
-					scanner.nextLine();
+					//scanner.nextLine();
 					System.out.println("Silahkan masukkan persamaan SPL : ");
 //					C:/Users/kandi/Downloads/mat.txt
-					double matrix[][] = new double[m][n];
+					matrix = new double[m][n+1];
 					for(int i = 0; i < m; i++) {
-						for(int j = 0; j < n; j++) {
+						for(int j = 0; j < n+1; j++) {
 							matrix[i][j] = scanner.nextDouble();
-							scanner.nextLine();
+//							scanner.nextLine();
 						}
 					}
 				}
@@ -67,7 +70,7 @@ public class Main {
 						}
 						matrixIn = new Scanner(temp);
 						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						double [][] matrix = new double[n][n];
+						matrix = new double[n][n];
 						for(int i = 0; i < n; i++) {
 							for(int j = 0; j < n; j++) {
 								matrix[i][j] = splitMatrix.nextDouble();
@@ -83,8 +86,6 @@ public class Main {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	
-//
 					
 					
 				}
@@ -95,16 +96,43 @@ public class Main {
 				System.out.println("4. Kaidah cramer");
 				int metodeSPL = scanner.nextInt();
 				if(metodeSPL == 1) {
-					
+					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
+						simple.printMatrix(spl.SPLGauss1(matrix));
+					}
 				}
 				else if(metodeSPL == 2) {
-					
+					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
+						spl.printSolusi1(spl.SPLGaussJordan1(matrix));
+					}
+					else if(spl.isNoSolution(matrix)) {
+						System.out.println("SPL tersebut tidak memiliki solusi");
+					}
+					else if(spl.isManySolution(matrix)) {
+						/////// AYO INI DIKERJAAA!!!
+						System.out.println("Solusinya ada banyak!");
+					}
 				}
 				else if(metodeSPL == 3) {
-					
+					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
+						spl.printSolusi1(spl.SPLMatrixBalikan(matrix));
+					}
+					else if(spl.isManySolution(matrix)){
+						System.out.println("SPL tidak bisa diselesaikan dengan matrix balikan");
+					}
+					else if(spl.isNoSolution(matrix)) {
+						System.out.println("SPL tidak memiliki solusi");
+					}
 				}
 				else if(metodeSPL == 4) {
-					
+					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
+						spl.printSolusi1(spl.SPLCramer(matrix));
+					}
+					else if(spl.isManySolution(matrix)){
+						System.out.println("SPL tidak bisa diselesaikan dengan metode cramer");
+					}
+					else if(spl.isNoSolution(matrix)) {
+						System.out.println("SPL tidak memiliki solusi");
+					}
 				}
 				
 			}

@@ -21,7 +21,7 @@ public class SPL {
 				}
 			}
 			else {
-				if(matrixOBE[rows-1][cols] != 0) {
+				if(matrixOBE[rows-1][j] != 0) {
 					noSolution = false;
 					break;
 				}
@@ -73,9 +73,10 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double[][] matrixGaussJordan = new double[rows][cols];
+		matrixGaussJordan = simple.gaussJordan(matrix);
 		double[][]solusi = new double[rows][1];
 		for(int i = 0; i < rows; i++) {
-			solusi[i][0] = matrixGaussJordan[i][i];
+			solusi[i][0] = matrixGaussJordan[i][cols-1];
 		}
 		
 		return solusi;
@@ -91,7 +92,15 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double [][]a = new double[rows][cols-1];
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < (cols-1); j++) {
+				a[i][j] = matrix[i][j];
+			}
+		}
 		double [][]b = new double [rows][1];
+		for(int i = 0; i < rows; i++) {
+			b[i][0] = matrix[i][cols-1];
+		}
 		double[][]solusi = new double[rows][1];
 		solusi = simple.perkalianDuaMatrix(simple.inversWithAdjoin(a), b);
 		return solusi;
@@ -131,7 +140,17 @@ public class SPL {
 		
 		return solusi;
 
-	}	
+	}
+	public void printSolusi1(double[][]solusi) {
+		int rows = solusi.length;
+		for(int i = 1; i <= rows; i++) {
+			System.out.print("x"+ i + " = "+solusi[i-1][0]);
+			if(i != rows) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println();
+	}
 		
 		
 	
