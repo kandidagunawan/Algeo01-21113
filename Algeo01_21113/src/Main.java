@@ -59,7 +59,6 @@ public class Main {
 				else if(inputType == 2){
 //					C:/Users/kandi/Downloads/mat.txt
 					matrix = inputFile.inputDetInv();
-					
 				}
 				System.out.println("Silahkan pilih metode penyelesaian SPL: ");
 				System.out.println("1. Metode eliminasi Gauss");
@@ -141,46 +140,8 @@ public class Main {
 					}
 				}
 				else if(inputType == 2) {
-//					C:/Users/kandi/Downloads/mat.txt
-//					matrix = inputFile.inputDetInv();
-					String directory;
-					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
-					directory = scanner.nextLine();
-					File temp = new File(directory);
-					Scanner file;
-					Scanner matrixIn;
-					try {
-						file = new Scanner(temp);
-						Scanner split = new Scanner(file.nextLine());
-						int n = 0;
-						int m = 1;
-						while(split.hasNextDouble()) {
-							n++;
-							split.nextDouble();
-							scanner.nextLine();
-						}
-						while(file.hasNextLine()) {
-							m++;
-						}
-						matrixIn = new Scanner(temp);
-						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[m][n];
-						for(int i = 0; i < m; i++) {
-							for(int j = 0; j < n; j++) {
-								matrix[i][j] = splitMatrix.nextDouble();
-								scanner.nextLine();
-							}
-							if(matrixIn.hasNextLine()) {
-								splitMatrix = new Scanner(matrixIn.nextLine());
-
-							}
-									
-						}
-
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					//matrix = new double[inputFile.inputDetInv().length][inputFile.inputDetInv()[0].length];
+					matrix = inputFile.inputDetInv();
 				}
 				System.out.println("Pilih cara menentukan determinan: ");
 				System.out.println("1. Metode Gauss Jordan");
@@ -220,38 +181,7 @@ public class Main {
 				}
 //				C:/Users/kandi/Downloads/invers.txt
 				else if(inputType == 2) {
-					String directory;
-					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
-					directory = scanner.nextLine();
-					File temp = new File(directory);
-					Scanner file;
-					Scanner matrixIn;
-					try {
-						file = new Scanner(temp);
-						Scanner split = new Scanner(file.nextLine());
-						int n = 0;
-						while(split.hasNextDouble()) {
-							n++;
-							split.nextDouble();
-						}
-						matrixIn = new Scanner(temp);
-						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[n][n];
-						for(int i = 0; i < n; i++) {
-							for(int j = 0; j < n; j++) {
-								matrix[i][j] = splitMatrix.nextDouble();
-							}
-							if(matrixIn.hasNextLine()) {
-								splitMatrix = new Scanner(matrixIn.nextLine());
-
-							}
-									
-						}
-
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					matrix = inputFile.inputDetInv();
 				}
 
 				System.out.println("Pilih cara menentukan invers: ");
@@ -296,25 +226,27 @@ public class Main {
 					x = scanner.nextDouble();
 					scanner.nextLine();
 				}
-				else {
+				else if(inputType == 2){
 					String directory;
 					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
 					directory = scanner.nextLine();
 					File temp = new File(directory);
 					Scanner file;
 					Scanner matrixIn;
+					int n = 0, m = 0;
 					try {
 						file = new Scanner(temp);
 						Scanner split = new Scanner(file.nextLine());
-						int n = 0;
-						while(split.hasNextDouble()) {
-							n++;
-							split.nextDouble();
+
+						m = 1;
+						while(file.hasNextLine()) {
+							m++;
+							file.nextLine();
 						}
 						matrixIn = new Scanner(temp);
 						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[n][2];
-						for(int i = 0; i < n-1; i++) {
+						matrix = new double[m-1][2];
+						for(int i = 0; i < m-1; i++) {
 							for(int j = 0; j < 2; j++) {
 								matrix[i][j] = splitMatrix.nextDouble();
 							}
@@ -355,6 +287,7 @@ public class Main {
 					x = scanner.nextDouble();
 					y = scanner.nextDouble();
 				}
+//				C:/Users/kandi/Downloads/bicubic.txt
 				else if(inputType == 2) {
 					String directory;
 					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
@@ -363,25 +296,20 @@ public class Main {
 					Scanner file;
 					Scanner matrixIn;
 					try {
-						file = new Scanner(temp);
-						Scanner split = new Scanner(file.nextLine());
-						int n = 0;
-						while(split.hasNextDouble()) {
-							n++;
-							split.nextDouble();
-						}
 						matrixIn = new Scanner(temp);
 						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[n][n];
-						for(int i = 0; i < n; i++) {
-							for(int j = 0; j < n; j++) {
+						matrix = new double[4][4];
+						for(int i = 0; i < 4; i++) {
+							for(int j = 0; j < 4; j++) {
 								matrix[i][j] = splitMatrix.nextDouble();
 							}
 							if(matrixIn.hasNextLine()) {
 								splitMatrix = new Scanner(matrixIn.nextLine());
-
 							}
-									
+							if(splitMatrix.hasNextDouble()) {
+								x = splitMatrix.nextDouble();
+								y = splitMatrix.nextDouble();
+							}
 						}
 
 					} catch (FileNotFoundException e) {
@@ -393,7 +321,7 @@ public class Main {
 				// MASUKIN RUMUS BICUBIC
 				bicubic bicubic = new bicubic();
 				X = bicubic.buildX();
-				double result = bicubic.hasilInterpolasi(x, y, matrix, X);
+				double result = bicubic.hasilInterpolasi(x, y, bicubic.koefisien(matrix, X), X);
 				System.out.println("f("+x+","+y+") = "+result);
 				System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(y/n)");
 				String fileNot = scanner.nextLine();
@@ -408,7 +336,6 @@ public class Main {
 				else {	// fileNot == "n"
 					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentu file");
 				}
-				
 				
 				
 			}

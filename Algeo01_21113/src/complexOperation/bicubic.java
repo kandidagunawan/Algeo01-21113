@@ -69,16 +69,48 @@ public class bicubic {
 	
 	public double[][]koefisien(double matrixInput[][], double[][]X){
 		double[][]nilaiKoefisien = new double[16][1];
-		simple.perkalianDuaMatrix(simple.inversGaussJordan(X), matrixInput);
+		double[][] y = new double[16][1];
+		int i = 0;
+		for(int j = 0; j < 4; j++) {
+			for(int k = 0; k < 4; k++) {
+				y[i][0] = matrixInput[k][j];
+				i++;
+			}
+		}
+		simple.perkalianDuaMatrix(simple.inversGaussJordan(X), y);
+
 		return nilaiKoefisien;
 	}
 	
-	public double hasilInterpolasi(double x, double y, double matrixInput[][], double[][]X) {
+	public double hasilInterpolasi(double x, double y, double nilaiKoefisien[][], double[][]X) {
 		double result = 0;
-		double [][]nilaiKoefisien = new double[16][1];
-		nilaiKoefisien = koefisien(matrixInput, X);
+//		double [][]nilaiKoefisien = new double[16][1];
+//		nilaiKoefisien = koefisien(Y, X);
+		pasanganij = new int[16][2];
+		int x1 = 0;
+		int y1 = 0;
+		int county1 = 0;
 		for(int i = 0; i < 16; i++) {
-			result += ((nilaiKoefisien[0][i])*Math.pow(x, pasanganij[i][0])*Math.pow(y, pasanganij[i][1]));
+			for(int j = 0; j < 2; j++) {
+				if(j == 0) {
+					pasanganij[i][j] = x1;
+					x1++;
+					if(x1 > 3) {
+						x1 = 0;
+					}
+				}
+				else {
+					pasanganij[i][j] = y1;
+					county1++;
+					if(county1 == 4) {
+						y1++;
+						county1 = 0;
+					}
+				}
+			}
+		}
+		for(int i = 0; i < 16; i++) {
+			result += ((nilaiKoefisien[i][0])*Math.pow(x, pasanganij[i][0])*Math.pow(y, pasanganij[i][1]));
 		}
 		
 		return result;
