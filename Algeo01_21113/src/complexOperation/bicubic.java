@@ -77,7 +77,7 @@ public class bicubic {
 				i++;
 			}
 		}
-		simple.perkalianDuaMatrix(simple.inversGaussJordan(X), y);
+		nilaiKoefisien = simple.perkalianDuaMatrix(simple.inversGaussJordan(X), y);
 
 		return nilaiKoefisien;
 	}
@@ -118,3 +118,4 @@ public class bicubic {
 	
 	
 }
+

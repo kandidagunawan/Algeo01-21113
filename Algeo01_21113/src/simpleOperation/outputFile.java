@@ -10,7 +10,7 @@ public class outputFile {
 	private String nama;
 	Scanner scanner = new Scanner(System.in);
 	
-	public void  createFile() {
+	public void createFile() {
 		try {
 			System.out.println("Masukkan nama file");
 			nama = scanner.nextLine();

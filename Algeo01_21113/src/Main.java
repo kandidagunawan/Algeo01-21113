@@ -20,6 +20,7 @@ public class Main {
 		boolean running = true;
 		while(running) {
 			inputFile inputFile = new inputFile();
+			outputFile outputFile = new outputFile();
 			System.out.println("MENU");
 			System.out.println("1. Sistem Persamaan Linier");
 			System.out.println("2. Determinan");
@@ -66,6 +67,7 @@ public class Main {
 				System.out.println("3. Metode matriks balikan");
 				System.out.println("4. Kaidah cramer");
 				int metodeSPL = scanner.nextInt();
+				scanner.nextLine();
 				String ans = "";
 				if(metodeSPL == 1) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
@@ -79,7 +81,21 @@ public class Main {
 							System.out.println();
 							ans += "\n";
 						}
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 && saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.SPLFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
+						
 					}
 					else if(spl.isManySolution(matrix)) {
 //						NANTI DILENGKAPI
@@ -102,7 +118,20 @@ public class Main {
 							System.out.println();
 							ans += "\n";
 						}
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes / 0 : no)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 || saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.SPLFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 					else if(spl.isNoSolution(matrix)) {
 						System.out.println("SPL tersebut tidak memiliki solusi");
@@ -126,7 +155,20 @@ public class Main {
 							System.out.println();
 							ans += "\n";
 						}				
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 && saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.SPLFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 					else if(spl.isManySolution(matrix)){
 						System.out.println("SPL tidak bisa diselesaikan dengan matrix balikan");
@@ -147,7 +189,20 @@ public class Main {
 							System.out.println();
 							ans += "\n";
 						}
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 && saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.SPLFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 					else if(spl.isManySolution(matrix)){
 						System.out.println("SPL tidak bisa diselesaikan dengan metode cramer");
@@ -185,17 +240,44 @@ public class Main {
 				System.out.println("2. Metode Kofaktor");
 				int metodeMatrix = scanner.nextInt();
 				if(metodeMatrix == 1) {
-					System.out.println("Nilai determinan matrix : " + simple.determinanOBE(matrix));
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+					double ans = simple.determinanOBE(matrix);
+					System.out.println("Nilai determinan matrix : " + ans);
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+					int saveFile = scanner.nextInt();
+//					System.out.println(saveFile);
+					while(saveFile != 1 && saveFile != 0) {
+						System.out.println("Jawaban anda tidak sesuai format!");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						saveFile = scanner.nextInt();
+					}
+					if(saveFile == 1) {
+						outputFile.detFile(ans);
+					}
+					else {
+						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+					}
 				}
 				else if(metodeMatrix == 2) {
-					System.out.println("Nilai determinan matrix : " + simple.determinanKofaktor(matrix));
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+					double ans = simple.determinanKofaktor(matrix);
+					System.out.println("Nilai determinan matrix : " + ans);
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+					int saveFile = scanner.nextInt();
+//					System.out.println(saveFile);
+					while(saveFile != 1 && saveFile != 0) {
+						System.out.println("Jawaban anda tidak sesuai format!");
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						saveFile = scanner.nextInt();
+					}
+					if(saveFile == 1) {
+						outputFile.detFile(ans);
+					}
+					else {
+						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+					}
 				}
 				else {
 					System.out.println("Anda memilih pilihan yang salah");
 				}
-
 				
 			}
 			else if(choice == 3) {
@@ -342,11 +424,12 @@ public class Main {
 							}
 							if(matrixIn.hasNextLine()) {
 								splitMatrix = new Scanner(matrixIn.nextLine());
-							}
-							if(splitMatrix.hasNextDouble()) {
-								x = splitMatrix.nextDouble();
-								y = splitMatrix.nextDouble();
-							}
+
+						}
+						}
+						if(splitMatrix.hasNextDouble()) {
+							x = splitMatrix.nextDouble();
+							y = splitMatrix.nextDouble();
 						}
 
 					} catch (FileNotFoundException e) {
@@ -392,27 +475,66 @@ public class Main {
 					System.out.println("Silahkan masukkan jumlah sample (m)");
 					m = scanner.nextInt();
 					matrix = new double[m][n+1];
+					System.out.println("Silahkan masukkan semua data xk dan y yang diketahui: ");
 					for(int i = 0; i < m; i++) {
 						for(int j  = 0; j < n+1; j++) {
 							matrix[i][j] = scanner.nextDouble();
-							scanner.nextLine();
 						}
 					}
 					inputTaksir = new double[n][1];
 					for(int i = 0; i < n; i++) {
 						inputTaksir[i][0] = scanner.nextDouble();
-						scanner.nextLine();
 					}
 				}
+//				C:/Users/kandi/Downloads/regresi.txt
 				else if(inputType == 2) {
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						m = 1;
+						n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						while(file.hasNextLine()) {
+							m++;
+							file.nextLine();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						matrix = new double[m-1][n];
+						for(int i = 0; i < (m-1); i++) {
+							for(int j = 0; j < n; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+
+							}
+						}
+						int i = 0;
+						inputTaksir = new double[n-1][1];
+						while(splitMatrix.hasNextDouble()) {
+							inputTaksir[i][0] = splitMatrix.nextDouble();
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					
+					}	
 				}
 				regresiLinier regresi = new regresiLinier();
 				koefisien = new double[m][1];
-				koefisien = regresi.koefisien(matrix);
+				koefisien = regresi.koefisien(regresi.matrixPersamaan(matrix));
 				regresi.printRegresi(koefisien, inputTaksir);
-				
-
 				
 			}
 			else if(choice == 7) {
