@@ -49,4 +49,10 @@ public class inputFile {
 	
 		return matrix;
 	}
+	
+	public double[][]inputInterpolasi(){
+		double matrix[][] = null;
+		
+		return matrix;
+	}
 }
