@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import complexOperation.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,58 +12,73 @@ import simpleOperation.simpleOperation;
 
 
 public class Main {
+	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		bicubic bicubic = new bicubic();
 		simpleOperation simple = new simpleOperation();
+		double matrix[][] = new double[4][4];
 		
-		double matrix[][] = null;
-		String directory;
-		System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
-		//  C:/Users/kandi/Downloads/mat.txt
-		directory = scanner.nextLine();
-		File temp = new File(directory);
-		Scanner file;
-		Scanner matrixIn;
-		int n = 0, m = 0;
-		try {
-			file = new Scanner(temp);
-			Scanner split = new Scanner(file.nextLine());
-			n = 0;
-			m = 1;
-			while(split.hasNextDouble()) {
-				n++;
-				//System.out.println(n);
-				split.nextDouble();
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				matrix[i][j] = scanner.nextDouble();
 			}
-			while(file.hasNextLine()) {
-				m++;
-				file.nextLine();
-			}
-			//System.out.println(m);
-			matrixIn = new Scanner(temp);
-			Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-			matrix = new double[m][n];
-			for(int i = 0; i < m; i++) {
-				for(int j = 0; j < n; j++) {
-					matrix[i][j] = splitMatrix.nextDouble();
-				}
-				if(matrixIn.hasNextLine()) {
-					splitMatrix = new Scanner(matrixIn.nextLine());
-
-				}
-						
-			}
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		for(int i = 0; i < m; i++) {
-			for(int j = 0; j < n; j++) {
-				System.out.print(matrix[i][j] + " ");
-			}
-			System.out.println();
-		}
+		double[][]x = new double[16][16];
+		x = bicubic.buildX();
+		//simple.printMatrix(bicubic.koefisien(matrix, x));
+		System.out.println(bicubic.hasilInterpolasi(0, 0, bicubic.koefisien(matrix, x), x));
+		
+//		simpleOperation simple = new simpleOperation();
+//		
+//		double matrix[][] = null;
+//		String directory;
+//		System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+//		//  C:/Users/kandi/Downloads/mat.txt
+//		directory = scanner.nextLine();
+//		File temp = new File(directory);
+//		Scanner file;
+//		Scanner matrixIn;
+//		int n = 0, m = 0;
+//		try {
+//			file = new Scanner(temp);
+//			Scanner split = new Scanner(file.nextLine());
+//			n = 0;
+//			m = 1;
+//			while(split.hasNextDouble()) {
+//				n++;
+//				//System.out.println(n);
+//				split.nextDouble();
+//			}
+//			while(file.hasNextLine()) {
+//				m++;
+//				file.nextLine();
+//			}
+//			//System.out.println(m);
+//			matrixIn = new Scanner(temp);
+//			Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+//			matrix = new double[m][n];
+//			for(int i = 0; i < m; i++) {
+//				for(int j = 0; j < n; j++) {
+//					matrix[i][j] = splitMatrix.nextDouble();
+//				}
+//				if(matrixIn.hasNextLine()) {
+//					splitMatrix = new Scanner(matrixIn.nextLine());
+//
+//				}
+//						
+//			}
+//
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		for(int i = 0; i < m; i++) {
+//			for(int j = 0; j < n; j++) {
+//				System.out.print(matrix[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
 	}
 		
 //		outputFile out = new outputFile();
