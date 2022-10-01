@@ -57,7 +57,7 @@ public class Main {
 					}
 				}
 				else if(inputType == 2){
-//					C:/Users/kandi/Downloads/mat.txt
+//					C:/Users/kandi/Downloads/spl.txt
 					matrix = inputFile.inputDetInv();
 				}
 				System.out.println("Silahkan pilih metode penyelesaian SPL: ");
@@ -66,9 +66,19 @@ public class Main {
 				System.out.println("3. Metode matriks balikan");
 				System.out.println("4. Kaidah cramer");
 				int metodeSPL = scanner.nextInt();
+				String ans = "";
 				if(metodeSPL == 1) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
-						simple.printMatrix(spl.SPLGauss1(matrix));
+						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							if(i < spl.SPLGauss1(matrix).length-1) {
+								System.out.print(", ");
+								ans += (", ");
+							}
+							System.out.println();
+							ans += "\n";
+						}
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isManySolution(matrix)) {
@@ -82,7 +92,16 @@ public class Main {
 				}
 				else if(metodeSPL == 2) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
-						spl.printSolusi1(spl.SPLGaussJordan1(matrix));
+						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							if(i < spl.SPLGauss1(matrix).length-1) {
+								System.out.print(", ");
+								ans += (", ");
+							}
+							System.out.println();
+							ans += "\n";
+						}
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isNoSolution(matrix)) {
@@ -97,7 +116,16 @@ public class Main {
 				}
 				else if(metodeSPL == 3) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
-						spl.printSolusi1(spl.SPLMatrixBalikan(matrix));
+						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							if(i < spl.SPLGauss1(matrix).length-1) {
+								System.out.print(", ");
+								ans += (", ");
+							}
+							System.out.println();
+							ans += "\n";
+						}				
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isManySolution(matrix)){
@@ -109,7 +137,16 @@ public class Main {
 				}
 				else if(metodeSPL == 4) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
-						spl.printSolusi1(spl.SPLCramer(matrix));
+						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
+							if(i < spl.SPLGauss1(matrix).length-1) {
+								System.out.print(", ");
+								ans += (", ");
+							}
+							System.out.println();
+							ans += "\n";
+						}
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
 					}
 					else if(spl.isManySolution(matrix)){
