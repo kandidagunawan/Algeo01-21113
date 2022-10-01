@@ -11,15 +11,15 @@ public class interpolasi {
 	
 	
 	//Membuat persamaan polinomial
-	public double[] polinom(double[][]matrix) {
+	public double[][] polinom(double[][]matrix) {
 		int row = matrix.length;
 		int col = matrix[0].length;
-		double[][] matrixPolinom = new double[row][col];
+		double[][] matrixPolinom = new double[row][row+1];
 		int i, j;
 		
 		for(i = 0; i < row; i++) {
-			for(j = 0; j < col; j++) {
-				if (j == col-1) {
+			for(j = 0; j < (row+1); j++) {
+				if (j == row) {
 					matrixPolinom[i][j] = matrix[i][1];
 				} else if (j==0) {
 					matrixPolinom[i][0] = 1.00;
@@ -31,37 +31,40 @@ public class interpolasi {
 		
 		simpleOperation simple = new simpleOperation();
 		double matrixPolinomOBE[][] = simple.gaussJordan(matrixPolinom);
-		
-		double[] solusiFungsi = new double[row];
+		double[][] solusiFungsi = new double[row][1];
 		
 		for(i = 0; i < row; i++) {
-			solusiFungsi[i] = matrixPolinomOBE[i][col-1];
+			solusiFungsi[i][0] = matrixPolinomOBE[i][row];
 		}
 		
 		return solusiFungsi;
 		
 	}
 	
-	public String fungsiInterpolasi(double[] solusiFungsi, double x) {
+	public String fungsiInterpolasi(double[][] solusiFungsi, double x) {
 		
 		double result = 0;
 		for(int i = 0; i < solusiFungsi.length; i++) {
-			result += solusiFungsi[i] * Math.pow(x, i);
+			result += solusiFungsi[i][0] * Math.pow(x, i);
 		}
 		
 		String solusi = "";
+		System.out.println(solusi);
 		String finalSolusi = "";
 		for(int i = 0; i < solusiFungsi.length; i++) {
 			if(i == 0) {
-				solusi += "f(x) = " + solusiFungsi[i] + "x" + i;
-			} else if(i == solusiFungsi.length-1) {
-				solusi += solusiFungsi[i] + "x" + i;
-			} else {
-				solusi += "+" + solusiFungsi[i] + "x" +i;
+				solusi = solusi + "f(x) = " + solusiFungsi[i][0];
+			} else if(i == 1){
+				solusi += "+" + solusiFungsi[i][0] + "x";
 			}
-			return solusi;		
+			else if(i == solusiFungsi.length-1) {
+				solusi = solusi + solusiFungsi[i][0] + "x" + "^" + i;
+			}	
+			else {
+				solusi += "+" + solusiFungsi[i][0] + "x" +  "^" + i;
+			}	
 		}
-		finalSolusi = solusi + result;
+		finalSolusi = solusi + ", f(" + x + ") = "+result;
 		
 		return finalSolusi;
 	}

@@ -325,7 +325,7 @@ public class Main {
 				System.out.println("1. Input dari keyboard");
 				System.out.println("2. Input dari file");
 				double matrix[][] = null;
-				double x;
+				double x = 0;
 				int inputType = scanner.nextInt();
 				scanner.nextLine();
 				
@@ -338,7 +338,6 @@ public class Main {
 					for(int i = 0; i < n; i++) {
 						for(int j = 0; j < 2; j++) {
 							matrix[i][j] = scanner.nextDouble();
-							scanner.nextLine();
 						}
 					}
 					System.out.println("Silahkan masukkan x yang ingin dicari nilai y nya : ");
@@ -380,7 +379,10 @@ public class Main {
 						e.printStackTrace();
 					}
 				}
+				
 				interpolasi interpolasi = new interpolasi();
+				System.out.println(interpolasi.fungsiInterpolasi((interpolasi.polinom(matrix)), x));
+				
 	
 
 				// INI MASUKIN AJ FUNGSI INTERPOLASINYA BUAT NYARI LALLAA
