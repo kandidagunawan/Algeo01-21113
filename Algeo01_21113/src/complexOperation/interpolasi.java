@@ -11,7 +11,7 @@ public class interpolasi {
 	
 	
 	//Membuat persamaan polinomial
-	public double polinom(double[][]matrix, double x) {
+	public double[] polinom(double[][]matrix) {
 		int row = matrix.length;
 		int col = matrix[0].length;
 		double[][] matrixPolinom = new double[row][col];
@@ -32,35 +32,36 @@ public class interpolasi {
 		simpleOperation simple = new simpleOperation();
 		double matrixPolinomOBE[][] = simple.gaussJordan(matrixPolinom);
 		
-		double[] solusi;
-		solusi = new double[row];
+		double[] solusiFungsi = new double[row];
 		
 		for(i = 0; i < row; i++) {
-			solusi[i] = matrixPolinomOBE[i][col-1];
+			solusiFungsi[i] = matrixPolinomOBE[i][col-1];
 		}
 		
-		double ans = 0;
-		for(i = 0; i < row; i++) {
-			ans += solusi[i] * Math.pow(x, i);
-		}
-		return ans;
+		return solusiFungsi;
+		
 	}
 	
-	public String fungsiInterpolasi(double[] ans) {
+	public String fungsiInterpolasi(double[] solusiFungsi, double x) {
+		
+		double result = 0;
+		for(int i = 0; i < solusiFungsi.length; i++) {
+			result += solusiFungsi[i] * Math.pow(x, i);
+		}
 		
 		String solusi = "";
 		String finalSolusi = "";
-		for(int i = 0; i < ans.length; i++) {
+		for(int i = 0; i < solusiFungsi.length; i++) {
 			if(i == 0) {
-				solusi += "f(x) = " + ans[i] + "x" + i;
-			} else if(i == ans.length-1) {
-				solusi += ans[i] + "x" + i;
+				solusi += "f(x) = " + solusiFungsi[i] + "x" + i;
+			} else if(i == solusiFungsi.length-1) {
+				solusi += solusiFungsi[i] + "x" + i;
 			} else {
-				solusi += "+" + ans[i] + "x" +i;
+				solusi += "+" + solusiFungsi[i] + "x" +i;
 			}
 			return solusi;		
 		}
-		finalSolusi = solusi;
+		finalSolusi = solusi + result;
 		
 		return finalSolusi;
 	}
