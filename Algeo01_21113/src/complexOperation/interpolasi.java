@@ -1,4 +1,5 @@
 package complexOperation;
+import simpleOperation.*;
 import java.math.*;
 
 public class interpolasi {

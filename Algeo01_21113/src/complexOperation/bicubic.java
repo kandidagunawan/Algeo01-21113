@@ -67,18 +67,16 @@ public class bicubic {
 		return X;
 	}
 	
-	public double[][]koefisien(double matrixInput[][]){
+	public double[][]koefisien(double matrixInput[][], double[][]X){
 		double[][]nilaiKoefisien = new double[16][1];
-		double [][]x = new double[16][16];
-		x = buildX();
-		simple.perkalianDuaMatrix(simple.inversGaussJordan(x), matrixInput);
+		simple.perkalianDuaMatrix(simple.inversGaussJordan(X), matrixInput);
 		return nilaiKoefisien;
 	}
 	
-	public double hasilInterpolasi(double x, double y, double matrixInput[][]) {
+	public double hasilInterpolasi(double x, double y, double matrixInput[][], double[][]X) {
 		double result = 0;
 		double [][]nilaiKoefisien = new double[16][1];
-		nilaiKoefisien = koefisien(matrixInput);
+		nilaiKoefisien = koefisien(matrixInput, X);
 		for(int i = 0; i < 16; i++) {
 			result += ((nilaiKoefisien[0][i])*Math.pow(x, pasanganij[i][0])*Math.pow(y, pasanganij[i][1]));
 		}

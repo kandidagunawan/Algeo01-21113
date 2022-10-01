@@ -19,6 +19,7 @@ public class Main {
 
 		boolean running = true;
 		while(running) {
+			inputFile inputFile = new inputFile();
 			System.out.println("MENU");
 			System.out.println("1. Sistem Persamaan Linier");
 			System.out.println("2. Determinan");
@@ -56,39 +57,8 @@ public class Main {
 					}
 				}
 				else if(inputType == 2){
-					String directory;
-					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
-					directory = scanner.nextLine();
-					File temp = new File(directory);
-					Scanner file;
-					Scanner matrixIn;
-					try {
-						file = new Scanner(temp);
-						Scanner split = new Scanner(file.nextLine());
-						int n = 0;
-						while(split.hasNextDouble()) {
-							n++;
-							split.nextDouble();
-						}
-						matrixIn = new Scanner(temp);
-						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[n][n];
-						for(int i = 0; i < n; i++) {
-							for(int j = 0; j < n; j++) {
-								matrix[i][j] = splitMatrix.nextDouble();
-							}
-							if(matrixIn.hasNextLine()) {
-								splitMatrix = new Scanner(matrixIn.nextLine());
-
-							}
-									
-						}
-
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+//					C:/Users/kandi/Downloads/mat.txt
+					matrix = inputFile.inputDetInv();
 					
 				}
 				System.out.println("Silahkan pilih metode penyelesaian SPL: ");
@@ -171,6 +141,8 @@ public class Main {
 					}
 				}
 				else if(inputType == 2) {
+//					C:/Users/kandi/Downloads/mat.txt
+//					matrix = inputFile.inputDetInv();
 					String directory;
 					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
 					directory = scanner.nextLine();
@@ -181,16 +153,22 @@ public class Main {
 						file = new Scanner(temp);
 						Scanner split = new Scanner(file.nextLine());
 						int n = 0;
+						int m = 1;
 						while(split.hasNextDouble()) {
 							n++;
 							split.nextDouble();
+							scanner.nextLine();
+						}
+						while(file.hasNextLine()) {
+							m++;
 						}
 						matrixIn = new Scanner(temp);
 						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
-						matrix = new double[n][n];
-						for(int i = 0; i < n; i++) {
+						matrix = new double[m][n];
+						for(int i = 0; i < m; i++) {
 							for(int j = 0; j < n; j++) {
 								matrix[i][j] = splitMatrix.nextDouble();
+								scanner.nextLine();
 							}
 							if(matrixIn.hasNextLine()) {
 								splitMatrix = new Scanner(matrixIn.nextLine());
@@ -203,7 +181,6 @@ public class Main {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
 				}
 				System.out.println("Pilih cara menentukan determinan: ");
 				System.out.println("1. Metode Gauss Jordan");
@@ -295,38 +272,183 @@ public class Main {
 				}
 			}
 			else if(choice == 4) {
-				System.out.println("Silahkan masukkan banyak titik yang ingin diinterpolasi : ");
-				int n = scanner.nextInt();
-				double matrix[][] = new double[n][2];
-				for(int i = 0; i < n; i++) {
-					for(int j = 0; j < 2; j++) {
-						matrix[i][j] = scanner.nextDouble();
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				double matrix[][] = null;
+				double x;
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				
+				if(inputType == 1) {
+					System.out.println("Silahkan masukkan banyak titik yang ingin diinterpolasi : ");
+					int n = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println("Silahkan masukkan titik-titik yang diketahui:");
+					matrix = new double[n][2];
+					for(int i = 0; i < n; i++) {
+						for(int j = 0; j < 2; j++) {
+							matrix[i][j] = scanner.nextDouble();
+							scanner.nextLine();
+						}
+					}
+					System.out.println("Silahkan masukkan x yang ingin dicari nilai y nya : ");
+					x = scanner.nextDouble();
+					scanner.nextLine();
+				}
+				else {
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						int n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						matrix = new double[n][2];
+						for(int i = 0; i < n-1; i++) {
+							for(int j = 0; j < 2; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+							}			
+						}
+						x = splitMatrix.nextDouble();
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
+				interpolasi interpolasi = new interpolasi();
+	
+
 				// INI MASUKIN AJ FUNGSI INTERPOLASINYA BUAT NYARI LALLAA
 			}
 			else if(choice == 5) {
-				double matrix[][] = new double[4][4];
-				System.out.println("Silahkan masukkan matrix 4x4: ");
-				for(int i = 0; i < 4; i++) {
-					for(int j = 0; j < 4; j++) {
-						matrix[i][j] = scanner.nextDouble();
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				double matrix[][] = null;
+				double X[][] = new double[16][16];
+				double x = 0, y = 0;
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				if(inputType == 1) {
+					matrix = new double[4][4];
+					System.out.println("Silahkan masukkan matrix 4x4: ");
+					for(int i = 0; i < 4; i++) {
+						for(int j = 0; j < 4; j++) {
+							matrix[i][j] = scanner.nextDouble();
+						}
+					}
+					System.out.println("Silahkkan masukkan titik yang ingin dicari nilainya: ");
+					x = scanner.nextDouble();
+					y = scanner.nextDouble();
+				}
+				else if(inputType == 2) {
+					String directory;
+					System.out.println("Silahkan masukkan path dari file yang ingin diinputkan: ");
+					directory = scanner.nextLine();
+					File temp = new File(directory);
+					Scanner file;
+					Scanner matrixIn;
+					try {
+						file = new Scanner(temp);
+						Scanner split = new Scanner(file.nextLine());
+						int n = 0;
+						while(split.hasNextDouble()) {
+							n++;
+							split.nextDouble();
+						}
+						matrixIn = new Scanner(temp);
+						Scanner splitMatrix = new Scanner(matrixIn.nextLine());			
+						matrix = new double[n][n];
+						for(int i = 0; i < n; i++) {
+							for(int j = 0; j < n; j++) {
+								matrix[i][j] = splitMatrix.nextDouble();
+							}
+							if(matrixIn.hasNextLine()) {
+								splitMatrix = new Scanner(matrixIn.nextLine());
+
+							}
+									
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
-				System.out.println("Silahkkan masukkan titik yang ingin dicari nilainya: ");
-				double x = scanner.nextDouble();
-				double y = scanner.nextDouble();
+
 				// MASUKIN RUMUS BICUBIC
+				bicubic bicubic = new bicubic();
+				X = bicubic.buildX();
+				double result = bicubic.hasilInterpolasi(x, y, matrix, X);
+				System.out.println("f("+x+","+y+") = "+result);
+				System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(y/n)");
+				String fileNot = scanner.nextLine();
+				while(fileNot != "y" || fileNot != "n") {
+					System.out.println("Jawaban anda tidak sesuai format!");
+					System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(y/n)");
+					fileNot = scanner.nextLine();
+				}
+				if(fileNot == "y") {
+					
+				}
+				else {	// fileNot == "n"
+					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentu file");
+				}
+				
 				
 				
 			}
 			else if(choice == 6) {
-				System.out.println("Silahkan masukkan jumlah peubah x (n): ");
-				int n = scanner.nextInt();
-				System.out.println("Silahkan masukkan jumlah sample (m)");
-				int m = scanner.nextInt();
-				// to be continued ini si regresi
+				System.out.println("Pilih cara input data: ");
+				System.out.println("1. Input dari keyboard");
+				System.out.println("2. Input dari file");
+				double matrix[][] = null;
+				int n = 0, m = 0;
+				double koefisien[][] = null;
+				double inputTaksir[][] = null;
+				int inputType = scanner.nextInt();
+				scanner.nextLine();
+				if(inputType == 1) {
+					System.out.println("Silahkan masukkan jumlah peubah x (n): ");
+					n = scanner.nextInt();
+					System.out.println("Silahkan masukkan jumlah sample (m)");
+					m = scanner.nextInt();
+					matrix = new double[m][n+1];
+					for(int i = 0; i < m; i++) {
+						for(int j  = 0; j < n+1; j++) {
+							matrix[i][j] = scanner.nextDouble();
+							scanner.nextLine();
+						}
+					}
+					inputTaksir = new double[n][1];
+					for(int i = 0; i < n; i++) {
+						inputTaksir[i][0] = scanner.nextDouble();
+						scanner.nextLine();
+					}
+				}
+				else if(inputType == 2) {
+					
+				}
+				regresiLinier regresi = new regresiLinier();
+				koefisien = new double[m][1];
+				koefisien = regresi.koefisien(matrix);
+				regresi.printRegresi(koefisien, inputTaksir);
 				
+
 				
 			}
 			else if(choice == 7) {
