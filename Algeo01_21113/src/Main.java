@@ -613,7 +613,7 @@ public class Main {
 					outputFile.regresiFile(ans);
 				}
 				else {	// saveFile tdk
-					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentuk file");
+					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentuk file!");
 				}
 				
 			}
