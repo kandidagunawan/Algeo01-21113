@@ -1,7 +1,7 @@
 # First Major Project Algeo01-21113
 NIM  | NAME
 ------------- | -------------
-1352113  | Muthia Robi’ah Alawiyah
+13521113  | Muthia Robi’ah Alawiyah
 13521132  | Dhanika Novlisariyanti
 13521155 | Kandida Edgina Gunawan
 
