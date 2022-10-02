@@ -1,6 +1,7 @@
 # First Major Project Algeo01-21113
 NIM  | NAME
 ------------- | -------------
+1352113  | Muthia Robi’ah Alawiyah
 13521132  | Dhanika Novlisariyanti
 13521155 | Kandida Edgina Gunawan
 
@@ -12,4 +13,9 @@ This program is developed to to fulfill the First Major Assignment of IF2123 Lin
 4. Solving interpolation, bicubic, and regression
 
 ## How to Run ##
-
+1. Clone this repository
+2. Go to your file explorer to where you saved this repository
+3. Go to file `src` then open command prompt there
+4. Type in `javac Main.java`
+5. Then type in `java Main`
+6. Our programm will hopefully run
