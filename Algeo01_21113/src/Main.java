@@ -285,11 +285,12 @@ public class Main {
 				System.out.println("1. Input dari keyboard");
 				System.out.println("2. Input dari file");
 				int inputType = scanner.nextInt();
+				int n = 0;
 				scanner.nextLine();
 				double matrix[][] = null;
 				if(inputType == 1) {
 					System.out.println("Silahkan masukkan orde matrix: ");
-					int n = scanner.nextInt();
+					n = scanner.nextInt();
 					System.out.println("Silahkan masukkan matrix anda: ");
 					matrix= new double[n][n];
 					for(int i = 0; i < n; i++) {
@@ -298,7 +299,7 @@ public class Main {
 						}
 					}
 				}
-//				C:/Users/kandi/Downloads/invers.txt
+//				C:/Users/kandi/Downloads/inverse.txt
 				else if(inputType == 2) {
 					matrix = inputFile.inputDetInv();
 				}
@@ -309,12 +310,29 @@ public class Main {
 				// INI JANGAN LUPA DIBUAT KONDISI KALO MATRIX GABISA DIINVERSIN
 				int metodeMatrix = scanner.nextInt();
 				if(metodeMatrix == 1) {
-					simple.printMatrix(simple.inversGaussJordan(matrix));
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+					double[][]ans = new double[n][n];
+					ans = simple.inversGaussJordan(matrix);
+					simple.printMatrix(ans);
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+					int saveFile = scanner.nextInt();
+					if(saveFile == 1) {
+						outputFile.invFile(ans);
+					}
+					else {
+						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+					}
+					
 				}
 				else if(metodeMatrix == 2) {
 					simple.printMatrix(simple.inversWithAdjoin(matrix));
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+					int saveFile = scanner.nextInt();
+					if(saveFile == 1) {
+						outputFile.invFile(simple.inversWithAdjoin(matrix));
+					}
+					else {
+						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+					}
 				}
 				else {
 					System.out.println("Anda memilih pilihan yang salah");
@@ -379,10 +397,18 @@ public class Main {
 						e.printStackTrace();
 					}
 				}
-				
+//				C:/Users/kandi/Downloads/interpolasi.txt
 				interpolasi interpolasi = new interpolasi();
-				System.out.println(interpolasi.fungsiInterpolasi((interpolasi.polinom(matrix)), x));
-				
+				String ans = interpolasi.fungsiInterpolasi((interpolasi.polinom(matrix)), x);
+				System.out.println(ans);
+				System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+				int saveFile = scanner.nextInt();
+				if(saveFile == 1) {
+					outputFile.interpolateFile(ans);
+				}
+				else {
+					System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+				}
 	
 
 				// INI MASUKIN AJ FUNGSI INTERPOLASINYA BUAT NYARI LALLAA
@@ -445,17 +471,13 @@ public class Main {
 				X = bicubic.buildX();
 				double result = bicubic.hasilInterpolasi(x, y, bicubic.koefisien(matrix, X), X);
 				System.out.println("f("+x+","+y+") = "+result);
-				System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(y/n)");
-				String fileNot = scanner.nextLine();
-				while(fileNot != "y" || fileNot != "n") {
-					System.out.println("Jawaban anda tidak sesuai format!");
-					System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(y/n)");
-					fileNot = scanner.nextLine();
+				String ans = "f("+x+","+y+") = "+result;
+				System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(1/0)");
+				int saveFile = scanner.nextInt();
+				if(saveFile == 1) {
+					outputFile.bicubicFile(ans);
 				}
-				if(fileNot == "y") {
-					
-				}
-				else {	// fileNot == "n"
+				else {	// saveFile tdk
 					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentu file");
 				}
 				
@@ -536,7 +558,16 @@ public class Main {
 				regresiLinier regresi = new regresiLinier();
 				koefisien = new double[m][1];
 				koefisien = regresi.koefisien(regresi.matrixPersamaan(matrix));
-				regresi.printRegresi(koefisien, inputTaksir);
+				String ans = regresi.printRegresi(koefisien, inputTaksir);
+				System.out.println(ans);
+				System.out.println("Apakah kamu akan menyimpan jawaban dalam bentuk file?(1/0)");
+				int saveFile = scanner.nextInt();
+				if(saveFile == 1) {
+					outputFile.regresiFile(ans);
+				}
+				else {	// saveFile tdk
+					System.out.println("Anda memilih untuk tidak menyimpan jawaban dalam bentuk file");
+				}
 				
 			}
 			else if(choice == 7) {

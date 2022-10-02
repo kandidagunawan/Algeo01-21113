@@ -43,26 +43,27 @@ public class regresiLinier {
 		return result;
 	}
 	
-	public void printRegresi(double koefisien[][], double inputTaksir[][]) {
+	public String printRegresi(double koefisien[][], double inputTaksir[][]) {
 		int rows = koefisien.length;
-		System.out.print("f(x) = ");
+		String ans = "f(x) = ";
 		for(int i = 0; i < rows; i++) {
-			System.out.print(koefisien[i][0]);
+			ans += koefisien[i][0];
 			if(i > 0) {
-				System.out.print("x"+i);
+				ans += ("x"+i);
 			}
 			if(i != (rows-1)) {
-				System.out.print(" + ");
+				ans += (" + ");
 			}
 		}
-		System.out.print(",");
+		ans += (",");
 		double taksiran = 0;
 		taksiran += koefisien[0][0];
 		for(int i = 0; i < inputTaksir.length; i++) {
 			taksiran += (koefisien[i+1][0])*inputTaksir[i][0];
 		}
-		System.out.print("f(xk) = " + taksiran);
-		System.out.println();
+		ans += ("f(xk) = " + taksiran);
+		ans += "\n";
+		return ans;
 	}
 	
 	

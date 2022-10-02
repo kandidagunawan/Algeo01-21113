@@ -38,13 +38,13 @@ public class outputFile {
 			e.printStackTrace();
 		}
 	}
-	public void invFile(double [][]matrix) {
+	public void invFile(double [][]inverseMatrix) {
 		try {
 			createFile();
 			FileWriter writer = new FileWriter(this.nama);
-			for(int i = 0; i < matrix.length; i++) {
-				for(int j = 0; j < matrix[0].length; j++) {
-					writer.write(String.valueOf(matrix[i][j]));
+			for(int i = 0; i < inverseMatrix.length; i++) {
+				for(int j = 0; j < inverseMatrix[0].length; j++) {
+					writer.write(String.valueOf(inverseMatrix[i][j]));
 					writer.write(" ");
 				}
 				writer.write("\n");
