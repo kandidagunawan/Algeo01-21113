@@ -12,18 +12,17 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double matrixOBE[][] = new double[rows][cols];
-		matrixOBE = simple.gauss(matrix);
-		boolean noSolution = true;
-		for(int j = 0; j < cols; j++) {
-			if(j == (cols-1)) {
-				if(matrixOBE[rows-1][j] == 0) {
-					noSolution = false;
+		matrixOBE = simple.gaussJordan(matrix);
+		boolean noSolution = false;
+		
+		for(int i = 0; i < rows; i++) {
+			int count0 = 0;
+			for(int j = 0; j < cols; j++) {
+				if(matrixOBE[i][j] == 0) {
+					count0++;
 				}
-			}
-			else {
-				if(matrixOBE[rows-1][j] != 0) {
-					noSolution = false;
-					break;
+				if((j == (cols-1)) && (count0 == (cols-1))) {
+					noSolution = true;
 				}
 			}
 
@@ -34,6 +33,9 @@ public class SPL {
 	public boolean isManySolution(double[][]matrix) {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
+		if(cols > rows+1) {
+			return true;
+		}
 		double matrixOBE[][] = new double[rows][cols];
 		matrixOBE = simple.gauss(matrix);
 		return simple.isBarisNol(matrixOBE);
@@ -191,7 +193,7 @@ public class SPL {
 		for(int i = 0; i < rows; i++) {
 			solusi[i][0] = matrixGaussJordan[i][cols-1];
 		}
-		
+//		simple.printMatrix(solusi);
 		return solusi;
 	}
 	
@@ -325,7 +327,7 @@ public class SPL {
 			b[i][0] = matrix[i][cols-1];
 		}
 		double[][]solusi = new double[rows][1];
-		solusi = simple.perkalianDuaMatrix(simple.inversWithAdjoin(a), b);
+		solusi = simple.perkalianDuaMatrix(simple.inversGaussJordan(a), b);
 		return solusi;
 	}
 	

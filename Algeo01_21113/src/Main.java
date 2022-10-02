@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -81,14 +82,10 @@ public class Main {
 							System.out.println();
 							ans += "\n";
 						}
+
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
 						int saveFile = scanner.nextInt();
 //						System.out.println(saveFile);
-						while(saveFile != 1 && saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.SPLFile(ans);
 						}
@@ -97,9 +94,31 @@ public class Main {
 						}
 						
 					}
+					else if(spl.isNoSolution(matrix)) {
+						System.out.println("SPL tidak memiliki solusi");
+					}
 					else if(spl.isManySolution(matrix)) {
-//						NANTI DILENGKAPI
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+//						
+						String[]output = spl.SPLGauss2(matrix);
+						String out= "";
+						for(int i = 0; i < output.length; i++) {
+							System.out.print("x"+i+ " = "+output[i]);
+							out += "x"+i+ " = "+output[i];
+							if(i != (output.length -1)) {
+								System.out.print(",");
+								out += ",";
+							}
+							
+						}
+						System.out.println();
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						int saveFile = scanner.nextInt();
+						if(saveFile == 1) {
+							outputFile.SPLFile(out);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 					else if(spl.isNoSolution(matrix)) {
 						System.out.println("SPL tidak memiliki solusi");
@@ -108,10 +127,10 @@ public class Main {
 				}
 				else if(metodeSPL == 2) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
-						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
-							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							if(i < spl.SPLGauss1(matrix).length-1) {
+						for(int i = 0; i < spl.SPLGaussJordan1(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLGaussJordan1(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLGaussJordan1(matrix)[i][0]);
+							if(i < spl.SPLGaussJordan1(matrix).length-1) {
 								System.out.print(", ");
 								ans += (", ");
 							}
@@ -138,17 +157,34 @@ public class Main {
 						
 					}
 					else if(spl.isManySolution(matrix)) {
-						/////// AYO INI DIKERJAAA!!!
-						System.out.println("Solusinya ada banyak!");
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
+						String[]output = spl.SPLGaussJordan2(matrix);
+						String out= "";
+						for(int i = 0; i < output.length; i++) {
+							System.out.print("x"+i+ " = "+output[i]);
+							out += "x"+i+ " = "+output[i];
+							if(i != (output.length -1)) {
+								System.out.print(",");
+								out += ",";
+							}
+							
+						}
+						System.out.println();
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						int saveFile = scanner.nextInt();
+						if(saveFile == 1) {
+							outputFile.SPLFile(out);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 				}
 				else if(metodeSPL == 3) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
-						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
-							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							if(i < spl.SPLGauss1(matrix).length-1) {
+						for(int i = 0; i < spl.SPLMatrixBalikan(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLMatrixBalikan(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLMatrixBalikan(matrix)[i][0]);
+							if(i < spl.SPLMatrixBalikan(matrix).length-1) {
 								System.out.print(", ");
 								ans += (", ");
 							}
@@ -170,19 +206,20 @@ public class Main {
 							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
 						}
 					}
-					else if(spl.isManySolution(matrix)){
-						System.out.println("SPL tidak bisa diselesaikan dengan matrix balikan");
-					}
 					else if(spl.isNoSolution(matrix)) {
 						System.out.println("SPL tidak memiliki solusi");
 					}
+					else if(spl.isManySolution(matrix)){
+						System.out.println("SPL tidak bisa diselesaikan dengan matrix balikan");
+					}
+
 				}
 				else if(metodeSPL == 4) {
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)){
-						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
-							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
-							if(i < spl.SPLGauss1(matrix).length-1) {
+						for(int i = 0; i < spl.SPLCramer(matrix).length; i++) {
+							ans += ("x"+(i+1)+" = "+spl.SPLCramer(matrix)[i][0]);
+							System.out.print("x"+(i+1)+" = "+spl.SPLCramer(matrix)[i][0]);
+							if(i < spl.SPLCramer(matrix).length-1) {
 								System.out.print(", ");
 								ans += (", ");
 							}
@@ -204,12 +241,13 @@ public class Main {
 							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
 						}
 					}
-					else if(spl.isManySolution(matrix)){
-						System.out.println("SPL tidak bisa diselesaikan dengan metode cramer");
-					}
 					else if(spl.isNoSolution(matrix)) {
 						System.out.println("SPL tidak memiliki solusi");
 					}
+					else if(spl.isManySolution(matrix)){
+						System.out.println("SPL tidak bisa diselesaikan dengan metode cramer");
+					}
+
 				}
 				
 			}
@@ -239,45 +277,51 @@ public class Main {
 				System.out.println("1. Metode Gauss Jordan");
 				System.out.println("2. Metode Kofaktor");
 				int metodeMatrix = scanner.nextInt();
-				if(metodeMatrix == 1) {
-					double ans = simple.determinanOBE(matrix);
-					System.out.println("Nilai determinan matrix : " + ans);
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
-					int saveFile = scanner.nextInt();
-//					System.out.println(saveFile);
-					while(saveFile != 1 && saveFile != 0) {
-						System.out.println("Jawaban anda tidak sesuai format!");
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-						saveFile = scanner.nextInt();
+				if(simple.isSquare(matrix)) {
+					if(metodeMatrix == 1) {
+						double ans = simple.determinanOBE(matrix);
+						System.out.println("Nilai determinan matrix : " + ans);
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 && saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.detFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
-					if(saveFile == 1) {
-						outputFile.detFile(ans);
+					else if(metodeMatrix == 2) {
+						double ans = simple.determinanKofaktor(matrix);
+						System.out.println("Nilai determinan matrix : " + ans);
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
+						int saveFile = scanner.nextInt();
+//						System.out.println(saveFile);
+						while(saveFile != 1 && saveFile != 0) {
+							System.out.println("Jawaban anda tidak sesuai format!");
+							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+							saveFile = scanner.nextInt();
+						}
+						if(saveFile == 1) {
+							outputFile.detFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
 					else {
-						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
-					}
-				}
-				else if(metodeMatrix == 2) {
-					double ans = simple.determinanKofaktor(matrix);
-					System.out.println("Nilai determinan matrix : " + ans);
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
-					int saveFile = scanner.nextInt();
-//					System.out.println(saveFile);
-					while(saveFile != 1 && saveFile != 0) {
-						System.out.println("Jawaban anda tidak sesuai format!");
-						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-						saveFile = scanner.nextInt();
-					}
-					if(saveFile == 1) {
-						outputFile.detFile(ans);
-					}
-					else {
-						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						System.out.println("Anda memilih pilihan yang salah");
 					}
 				}
 				else {
-					System.out.println("Anda memilih pilihan yang salah");
+					System.out.println("Matrix tidak punya determinan!");
 				}
+				
 				
 			}
 			else if(choice == 3) {
@@ -309,33 +353,36 @@ public class Main {
 				System.out.println("2. Invers dengan matrix adjoin");
 				// INI JANGAN LUPA DIBUAT KONDISI KALO MATRIX GABISA DIINVERSIN
 				int metodeMatrix = scanner.nextInt();
-				if(metodeMatrix == 1) {
-					double[][]ans = new double[n][n];
-					ans = simple.inversGaussJordan(matrix);
-					simple.printMatrix(ans);
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-					int saveFile = scanner.nextInt();
-					if(saveFile == 1) {
-						outputFile.invFile(ans);
+				if(simple.isSquare(matrix) && simple.determinanOBE(matrix) != 0) {
+					if(metodeMatrix == 1) {
+						double[][]ans = new double[n][n];
+						ans = simple.inversGaussJordan(matrix);
+						simple.printMatrix(ans);
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						int saveFile = scanner.nextInt();
+						if(saveFile == 1) {
+							outputFile.invFile(ans);
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
+						
 					}
-					else {
-						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+					else if(metodeMatrix == 2) {
+						simple.printMatrix(simple.inversWithAdjoin(matrix));
+						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
+						int saveFile = scanner.nextInt();
+						if(saveFile == 1) {
+							outputFile.invFile(simple.inversWithAdjoin(matrix));
+						}
+						else {
+							System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
+						}
 					}
-					
 				}
-				else if(metodeMatrix == 2) {
-					simple.printMatrix(simple.inversWithAdjoin(matrix));
-					System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-					int saveFile = scanner.nextInt();
-					if(saveFile == 1) {
-						outputFile.invFile(simple.inversWithAdjoin(matrix));
-					}
-					else {
-						System.out.println("Kamu memilih untuk tidak menyimpan hasil output ke dalam file!");
-					}
-				}
+
 				else {
-					System.out.println("Anda memilih pilihan yang salah");
+					System.out.println("Matrix tidak mempunyai invers!");
 				}
 			}
 			else if(choice == 4) {
