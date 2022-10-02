@@ -196,30 +196,6 @@ public class SPL {
 	}
 	
 	public String[] SPLGaussJordan2 (double[][]matrix) {
-		int rows = matrix.length;
-		int cols = matrix[0].length;
-		double matrixOBE[][] = new double[rows][cols];
-		matrixOBE = simple.gauss(matrix);
-
-		double solusi[][] = new double[rows][1];
-		for(int i = (rows-1); i >= 0; i--) {
-			int j = (cols-2);
-			double total = matrixOBE[i][cols-1];
-			while(j >=  0 && matrixOBE[i][j] != 0) {
-				if((j-1 == -1)|| (matrixOBE[i][j-1] == 0)) {
-					solusi[i][0] = total / (matrixOBE[i][j]);
-				}
-				else {
-					total -= (solusi[j][0] * matrixOBE[i][j]);
-				}
-				j--;
-			}
-		}
-		return solusi;
-	}
-	
-	
-	public String[] SPLGauss2 (double[][]matrix) {
 		String[] alphabet = {"a", "b", "c", "d", "e", "f", 
 		        "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", 
 		        "r", "s", "t", "u", "v", "w", "x", "y", "z"};
