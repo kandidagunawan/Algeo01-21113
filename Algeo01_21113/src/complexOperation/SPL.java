@@ -195,10 +195,120 @@ public class SPL {
 		return solusi;
 	}
 	
-	public String SPLGaussJordan2 (double[][]matrix) {
-		String result = "";
+	public String[] SPLGaussJordan2 (double[][]matrix) {
+		String[] alphabet = {"a", "b", "c", "d", "e", "f", 
+		        "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", 
+		        "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 		
-		return result;
+		
+		double[][] matrixOBE = simple.OBEreduksi(matrix);
+		int row = matrix.length;
+		int col = matrix[0].length-1;
+		
+		int countRowZero = 0;
+		int countRow =  0;
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				if(matrixOBE[i][j] == 0) {
+					countRowZero += 1;
+				}
+			}
+			if (countRowZero == col) {
+				countRow += 1;
+			}
+		}
+		
+		int count = (col - row)+ countRow;
+		
+		int[][] tempIndex = new int[row][2];
+		double[] tempSolusi = new double[col];
+		
+		for(int i = 0; i < col; i++) {
+			tempSolusi[i] = -999;
+		}
+		
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				if(matrixOBE[i][j] == 1) {
+					tempIndex[i][0] = i;
+					tempIndex[i][1] = j;
+					break;
+				}
+			}
+		}
+		
+		double tempD;
+		for(int i = row-1; i >= 0; i--) {
+			tempD = matrixOBE[i][col];
+			for(int j = tempIndex[i][1]; j < col; j++) {
+				if(tempSolusi[j] == -999) {
+					tempD -= (0*matrixOBE[i][j]);
+				} else {
+					tempD -= (tempSolusi[j] * matrixOBE[i][j]);
+				}
+			}
+			
+			tempSolusi[tempIndex[i][1]] = tempD;
+		}
+		
+		int countZero = 0;
+		for(int i = 0; i < col; i++) {
+			if(tempSolusi[i] == 0) {
+				countZero += 1;
+			}
+		}
+		
+		boolean allZero = (countZero == col);
+		String[] X = new String[col];
+		if(!allZero) {
+			for(int i = col-1; i >= 0; i--) {
+				if(tempSolusi[i] == -999 && count > 0) {
+					X[i] = alphabet[i];
+					count -= 1;
+				} else if (tempSolusi[i] == -999 && count <= 0) {
+					X[i] = "";
+				} else {
+					X[i] = Double.toString(tempSolusi[i]) + " ";
+				}
+			}
+			
+		} else {
+			for(int i = col-1; i >= 0; i--) {
+				if(count > 0) {
+					X[i] = alphabet[i];
+					count -= 1;
+				} else {
+					X[i] = "";
+				}
+			}
+		}
+		
+		String tempS;
+		for(int i = 0; i < row; i++) {
+			tempS = X[tempIndex[i][1]];
+			for(int j = tempIndex[i][1]; j < col; j++) {
+				if(tempSolusi[j] == -999 && matrixOBE[i][j] != 0 && tempIndex[i][1] != j)
+					if(matrixOBE[i][j] == 1) {
+						tempS += " -" + X[j] + " ";
+					} else if (matrixOBE[i][j] == -1) {
+						tempS += " +" + X[j] + " ";
+					} else if(matrixOBE[i][j] > 0) {
+						tempS += " -" + Double.toString(matrixOBE[i][j]) + "*" + X[j] + " ";
+					} else {
+						tempS += " +" + Double.toString((-1 * matrixOBE[i][j])) + "*" + X[j] + " ";
+					}
+				}
+			X[tempIndex[i][1]] = tempS;
+			}
+		
+		
+		for(int i = 0; i < X.length; i++) {
+			if(X[i] == "") {
+				X[i] = "0.0";
+			}
+		}
+		
+		return X;
 	}
 
 	public double[][] SPLMatrixBalikan(double[][]matrix) {
