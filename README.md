@@ -19,3 +19,8 @@ This program is developed to to fulfill the First Major Assignment of IF2123 Lin
 4. Type in `javac Main.java`
 5. Then type in `java Main`
 6. Our programm will hopefully run
+
+----------OR---------------------
+1. Download Algeo-21113.jar file
+2. Go to command prompt and go to the directory you saved that jar file
+3. Type `java -jar Algeo-21113.jar` to run the program
