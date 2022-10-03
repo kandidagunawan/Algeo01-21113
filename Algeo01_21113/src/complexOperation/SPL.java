@@ -12,7 +12,7 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double matrixOBE[][] = new double[rows][cols];
-		matrixOBE = simple.gaussJordan(matrix);
+		matrixOBE = simple.OBEreduksi(matrix);
 		boolean noSolution = false;
 		
 		for(int i = 0; i < rows; i++) {
@@ -38,7 +38,7 @@ public class SPL {
 			return true;
 		}
 		double matrixOBE[][] = new double[rows][cols];
-		matrixOBE = simple.gauss(matrix);
+		matrixOBE = simple.OBE(matrix);
 		return simple.isBarisNol(matrixOBE);
 	}
 	
@@ -46,7 +46,7 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double matrixOBE[][] = new double[rows][cols];
-		matrixOBE = simple.gauss(matrix);
+		matrixOBE = simple.OBE(matrix);
 		//simple.printMatrix(matrixOBE);
 		double solusi[][] = new double[rows][1];
 		for(int i = (rows-1); i >= 0; i--) {
