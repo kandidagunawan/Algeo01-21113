@@ -234,9 +234,10 @@ public class simpleOperation {
 		int rows = matrix.length;       
 		int cols = matrix[0].length;
 		int i;
+
 		
-		tukerNol(copyMatrix);
-		for (i = 0; i < matrix.length; i++) {
+		tukerNol(matrix);
+		for (i = 0; i < rows; i++) {
 			int temp1 = i; //i= 0, tempi = 0
 			int temp2 = i;
 			boolean foundnotZero = false;
@@ -282,19 +283,20 @@ public class simpleOperation {
 		return copyMatrix;
 	}
 	public double[][]gaussJordan(double[][]matrix){
-
+		double copyMatrix[][] = copyMatrix(matrix);
+		double copyGaussMatrix[][] = gauss(copyMatrix);
 		int row = matrix.length;
 		int col = matrix[0].length;
 		
 		int i= 0;
 		int j = 0;
 		while (i < row && j < col) {
-			if (matrix[i][j] == 1) {
+			if (copyGaussMatrix[i][j] == 1) {
 				for (int brs = 0; brs < row; brs++) {
 					if (brs != i) {
-						double c = matrix[brs][j];
+						double c = copyGaussMatrix[brs][j];
 						for (int kol = j; kol < col; kol++) {
-							matrix[brs][kol] -= matrix[i][kol] * c;
+							copyGaussMatrix[brs][kol] -= copyGaussMatrix[i][kol] * c;
 						}
 					}
 				}
@@ -306,7 +308,7 @@ public class simpleOperation {
 			
 		}
 		
-		return matrix;
+		return copyGaussMatrix;
 	}
 	
 	
