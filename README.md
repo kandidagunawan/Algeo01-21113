@@ -24,3 +24,4 @@ This program is developed to to fulfill the First Major Assignment of IF2123 Lin
 1. Download Algeo-21113.jar file
 2. Go to command prompt and go to the directory you saved that jar file
 3. Type `java -jar Algeo-21113.jar` to run the program
+4. Hasil save output file akan berada di file lib itu sendiri
