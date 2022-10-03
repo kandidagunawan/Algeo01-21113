@@ -25,3 +25,9 @@ This program is developed to to fulfill the First Major Assignment of IF2123 Lin
 2. Go to command prompt and go to the directory you saved that jar file
 3. Type `java -jar Algeo-21113.jar` to run the program
 4. Hasil save output file akan berada di file lib itu sendiri
+
+## How to Run 3.0 ##
+1. Go to `src` folder
+2. Compile all source code: `javac -d ..\bin simpleOperation/*.java complexOperation/*.java Main.java`
+3. Go to bin folder
+4. Open command prompt on that directory and type in `java Main`
