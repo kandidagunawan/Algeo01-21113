@@ -21,9 +21,10 @@ public class SPL {
 				if(matrixOBE[i][j] == 0) {
 					count0++;
 				}
-				if((j == (cols-1)) && (count0 == (cols-1))) {
+				if((j == (cols-2)) && (count0 == (cols-1) && matrixOBE[i][j+1] != 0)) {
 					noSolution = true;
 				}
+
 			}
 
 		}
@@ -188,7 +189,8 @@ public class SPL {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		double[][] matrixGaussJordan = new double[rows][cols];
-		matrixGaussJordan = simple.gaussJordan(matrix);
+		matrixGaussJordan = simple.OBEreduksi(matrix);
+		//simple.printMatrix(matrixGaussJordan);
 		double[][]solusi = new double[rows][1];
 		for(int i = 0; i < rows; i++) {
 			solusi[i][0] = matrixGaussJordan[i][cols-1];

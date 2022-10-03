@@ -57,7 +57,10 @@ public class Main {
 //							scanner.nextLine();
 						}
 					}
+					//simple.printMatrix(simple.OBE(matrix));
+					
 				}
+				
 				else if(inputType == 2){
 //					C:/Users/kandi/Downloads/spl.txt
 					matrix = inputFile.inputDetInv();
@@ -71,6 +74,7 @@ public class Main {
 				scanner.nextLine();
 				String ans = "";
 				if(metodeSPL == 1) {
+					
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
 						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
 							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
@@ -98,7 +102,7 @@ public class Main {
 						System.out.println("SPL tidak memiliki solusi");
 					}
 					else if(spl.isManySolution(matrix)) {
-//						
+//						simple.printMatrix(matrix);
 						String[]output = spl.SPLGauss2(matrix);
 						String out= "";
 						for(int i = 0; i < output.length; i++) {
@@ -126,6 +130,7 @@ public class Main {
 					
 				}
 				else if(metodeSPL == 2) {
+					//simple.printMatrix(simple.OBEreduksi(matrix));
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
 						for(int i = 0; i < spl.SPLGaussJordan1(matrix).length; i++) {
 							ans += ("x"+(i+1)+" = "+spl.SPLGaussJordan1(matrix)[i][0]);
@@ -139,12 +144,6 @@ public class Main {
 						}
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes / 0 : no)");
 						int saveFile = scanner.nextInt();
-//						System.out.println(saveFile);
-						while(saveFile != 1 || saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (y/n)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.SPLFile(ans);
 						}
@@ -157,6 +156,11 @@ public class Main {
 						
 					}
 					else if(spl.isManySolution(matrix)) {
+						//simple.printMatrix(matrix);
+						
+//						double[][]obe = new double[matrix.length][matrix[0].length];
+//						obe = spl.SPLGaussJordan1(matrix);
+//						simple.printMatrix(obe);
 						String[]output = spl.SPLGaussJordan2(matrix);
 						String out= "";
 						for(int i = 0; i < output.length; i++) {
@@ -193,12 +197,6 @@ public class Main {
 						}				
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
 						int saveFile = scanner.nextInt();
-//						System.out.println(saveFile);
-						while(saveFile != 1 && saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.SPLFile(ans);
 						}
@@ -228,12 +226,6 @@ public class Main {
 						}
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
 						int saveFile = scanner.nextInt();
-//						System.out.println(saveFile);
-						while(saveFile != 1 && saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.SPLFile(ans);
 						}
@@ -283,12 +275,6 @@ public class Main {
 						System.out.println("Nilai determinan matrix : " + ans);
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
 						int saveFile = scanner.nextInt();
-//						System.out.println(saveFile);
-						while(saveFile != 1 && saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.detFile(ans);
 						}
@@ -301,12 +287,6 @@ public class Main {
 						System.out.println("Nilai determinan matrix : " + ans);
 						System.out.println("Apakah anda ingin mendapatkan file hasil output? (1 : yes/ 0 : no)");
 						int saveFile = scanner.nextInt();
-//						System.out.println(saveFile);
-						while(saveFile != 1 && saveFile != 0) {
-							System.out.println("Jawaban anda tidak sesuai format!");
-							System.out.println("Apakah anda ingin mendapatkan file hasil output? (1/0)");
-							saveFile = scanner.nextInt();
-						}
 						if(saveFile == 1) {
 							outputFile.detFile(ans);
 						}
