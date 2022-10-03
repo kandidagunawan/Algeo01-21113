@@ -109,6 +109,7 @@ public class bicubic {
 				}
 			}
 		}
+
 		for(int i = 0; i < 16; i++) {
 			result += ((nilaiKoefisien[i][0])*Math.pow(x, pasanganij[i][0])*Math.pow(y, pasanganij[i][1]));
 		}

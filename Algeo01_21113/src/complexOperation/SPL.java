@@ -47,21 +47,39 @@ public class SPL {
 		int cols = matrix[0].length;
 		double matrixOBE[][] = new double[rows][cols];
 		matrixOBE = simple.gauss(matrix);
-
+		//simple.printMatrix(matrixOBE);
 		double solusi[][] = new double[rows][1];
 		for(int i = (rows-1); i >= 0; i--) {
 			int j = (cols-2);
 			double total = matrixOBE[i][cols-1];
-			while(j >=  0 && matrixOBE[i][j] != 0) {
-				if((j-1 == -1)|| (matrixOBE[i][j-1] == 0)) {
+			boolean done = false;
+			while(j >=  0 && done == false) {
+				if(j-1 == -1) {
+					done = true;
 					solusi[i][0] = total / (matrixOBE[i][j]);
 				}
 				else {
-					total -= (solusi[j][0] * matrixOBE[i][j]);
+					if(matrixOBE[i][j] != 1) {
+						total -= (solusi[j][0] * matrixOBE[i][j]);
+					}
+					else {
+						int count0 = 0;
+						for(int k = 0; k < j; k++) {
+							if(matrixOBE[i][k] == 0) {
+								count0++;
+							}
+						}
+						if(count0 == j) {
+							done = true;
+							solusi[i][0] = total;
+						}
+					}
+					//System.out.println(total);
 				}
 				j--;
 			}
 		}
+//		simple.printMatrix(solusi);
 		return solusi;
 	}
 	
@@ -190,6 +208,7 @@ public class SPL {
 		int cols = matrix[0].length;
 		double[][] matrixGaussJordan = new double[rows][cols];
 		matrixGaussJordan = simple.OBEreduksi(matrix);
+		
 		//simple.printMatrix(matrixGaussJordan);
 		double[][]solusi = new double[rows][1];
 		for(int i = 0; i < rows; i++) {

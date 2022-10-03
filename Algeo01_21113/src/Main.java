@@ -76,6 +76,7 @@ public class Main {
 				if(metodeSPL == 1) {
 					
 					if(!spl.isManySolution(matrix) && !spl.isNoSolution(matrix)) {
+						//simple.printMatrix(simple.OBE(matrix));
 						for(int i = 0; i < spl.SPLGauss1(matrix).length; i++) {
 							ans += ("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
 							System.out.print("x"+(i+1)+" = "+spl.SPLGauss1(matrix)[i][0]);
@@ -460,6 +461,7 @@ public class Main {
 					System.out.println("Silahkkan masukkan titik yang ingin dicari nilainya: ");
 					x = scanner.nextDouble();
 					y = scanner.nextDouble();
+					
 				}
 //				C:/Users/kandi/Downloads/bicubic.txt
 				else if(inputType == 2) {
@@ -496,6 +498,8 @@ public class Main {
 				// MASUKIN RUMUS BICUBIC
 				bicubic bicubic = new bicubic();
 				X = bicubic.buildX();
+				//simple.printMatrix(simple.inversGaussJordan(X));
+				//simple.printMatrix(bicubic.koefisien(matrix, X));
 				double result = bicubic.hasilInterpolasi(x, y, bicubic.koefisien(matrix, X), X);
 				System.out.println("f("+x+","+y+") = "+result);
 				String ans = "f("+x+","+y+") = "+result;
