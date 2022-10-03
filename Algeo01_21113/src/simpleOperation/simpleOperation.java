@@ -15,6 +15,20 @@ public class simpleOperation {
 			System.out.println();
 		}
 	}
+
+	//COPY MATRIX
+	public double[][]copyMatrix(double[][] matrix){
+		
+		int row = matrix.length;
+		int col = matrix[0].length;
+		double hasilCopy[][] = new double[row][col];
+		for(int i = 0; i < row; i++){
+			for(int j = 0; j < col; j++){
+				hasilCopy[i][j] = matrix[i][j];
+			}
+		}
+		return hasilCopy;
+	}
 	
 	public double [][]tukarBaris(double[][] matrix, int baris1, int baris2){
 		double temp;
@@ -216,11 +230,12 @@ public class simpleOperation {
 //	ELIMINASI GAUSS & GAUSS JORDAN
 	public double[][]gauss(double[][]matrix){
 		
+		double copyMatrix[][] = copyMatrix(matrix);
 		int rows = matrix.length;       
 		int cols = matrix[0].length;
 		int i;
 		
-		tukerNol(matrix);
+		tukerNol(copyMatrix);
 		for (i = 0; i < matrix.length; i++) {
 			int temp1 = i; //i= 0, tempi = 0
 			int temp2 = i;
@@ -228,7 +243,7 @@ public class simpleOperation {
 			
 			for (int brs = i; brs < rows; brs++) {
 				for (int kol = i; kol < cols; kol++) {
-					if(matrix[brs][kol] != 0) {
+					if(copyMatrix[brs][kol] != 0) {
 						foundnotZero = true;    
 						temp1 = brs;
 						temp2 = kol;
@@ -246,28 +261,28 @@ public class simpleOperation {
 			
 			if (temp1 != i) { //switch switch heyyyyyy
 				for (int j = 0; j < cols; j++) {
-					tukarBaris(matrix, i, j);
+					tukarBaris(copyMatrix, i, j);
 				}
 				temp1 = i;
 		}
-			double pembagi = matrix[temp1][temp2];
+			double pembagi = copyMatrix[temp1][temp2];
 			for(int j = temp2; j< cols; j++) {
-				matrix[i][j] /= pembagi;
+				copyMatrix[i][j] /= pembagi;
 			}
 			
 			for (int brs = i+1; brs < rows; brs++) {
-				double c = matrix[brs][temp2];
+				double c = copyMatrix[brs][temp2];
 				for(int kol = temp2; kol < cols; kol++) {
-					matrix[brs][kol] -= matrix[temp1][kol] * c;
+					copyMatrix[brs][kol] -= copyMatrix[temp1][kol] * c;
 				}
 			}	
 		}
 		
-		tukerNol(matrix);
-		return matrix;
+		tukerNol(copyMatrix);
+		return copyMatrix;
 	}
 	public double[][]gaussJordan(double[][]matrix){
-		matrix = gauss(matrix);
+
 		int row = matrix.length;
 		int col = matrix[0].length;
 		
@@ -477,44 +492,45 @@ public class simpleOperation {
 	}
 	
 	public double[][] OBE(double matrix[][]){
+		double copyMatrix[][] = copyMatrix(matrix);
 		int row = matrix.length;
 		int col = matrix[0].length;
 		int i = 0, j = 0;
 		
 		while (j < col) {
 			boolean cariSatu = false;
-			if(matrix[i][j] == 0) {
+			if(copyMatrix[i][j] == 0) {
 				boolean cariNol = false;
 				int colCheck = i + 1;
 				
 				while(colCheck < row && !cariNol) {
-					if(matrix[colCheck][j] != 0) {
+					if(copyMatrix[colCheck][j] != 0) {
 						cariNol = true;
 						for(int x = 0; x < col; x++) {
-							double temp = matrix[colCheck][x];
-							matrix[colCheck][x] = matrix[i][x];
-							matrix[i][x] = temp;
+							double temp = copyMatrix[colCheck][x];
+							copyMatrix[colCheck][x] = copyMatrix[i][x];
+							copyMatrix[i][x] = temp;
 						}
 					}
 					colCheck++;
 				}
 			}
 			
-			if(matrix[i][j] != 0) {
-				double per = matrix[i][j];
+			if(copyMatrix[i][j] != 0) {
+				double per = copyMatrix[i][j];
 				for(int a = 0; a < col; a++) {
-					matrix[i][a] /= per;
+					copyMatrix[i][a] /= per;
 				}
 				cariSatu = true;
 				
 				double factor;
 				int rowLain = i+1;
 				while(rowLain < row) {
-					factor = matrix[rowLain][j];
+					factor = copyMatrix[rowLain][j];
 					double val;
 					for(int k = 0; k < col; k++) {
-						val = matrix[i][k] * factor;
-						matrix[rowLain][k] -= val;
+						val = copyMatrix[i][k] * factor;
+						copyMatrix[rowLain][k] -= val;
 					}
 					rowLain++;
 				}
@@ -527,14 +543,15 @@ public class simpleOperation {
 			}
 			j++;
 	}
-		return matrix;
+		return copyMatrix;
 	}
 
 
 	public double[][] OBEreduksi(double[][] matrix){
+		double copyMatrix[][] = copyMatrix(matrix);
 		int row = matrix.length;
 		int col = matrix[0].length;
-		double[][] matrixRed = OBE(matrix);
+		double[][] matrixRed = OBE(copyMatrix);
 		
 		for(int i = row - 1; i >= 0; i--) {
 			for(int j = col - 1; j >= 0; j--) {
@@ -546,13 +563,13 @@ public class simpleOperation {
 						double val;
 						for(int k = 0; k < col; k++) {
 							val = matrixRed[i][k] * factor;
-							matrix[rowLain][k] -= val;
+							copyMatrix[rowLain][k] -= val;
 						}
-						rowLain --;
+						rowLain--;
 					}
 				}
 			}
 		}
-		return matrix;
+		return copyMatrix;
 	}
 }	
